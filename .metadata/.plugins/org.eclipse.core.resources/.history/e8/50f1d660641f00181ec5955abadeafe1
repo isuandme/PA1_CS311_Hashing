@@ -1,0 +1,18 @@
+
+public class TESTER {
+
+	public static void main(String [ ] args){
+		
+		HashTable table = new HashTable(10);
+			table.add(new Tuple(43, "Hello"));			
+			table.add(new Tuple(43, "Goodbye"));
+			table.add(new Tuple(43, "hello"));
+			table.add(new Tuple(43, "yes"));		// 1
+			table.add(new Tuple(43, "no"));
+			table.add(new Tuple(43, "yesagain"));
+			table.add(new Tuple(43, "noagain"));
+			table.add(new Tuple(43, "yes"));		// 2
+			table.add(new Tuple(43, "yes"));		// 3
+			table.add(new Tuple(43, "NO!"));
+	}
+}

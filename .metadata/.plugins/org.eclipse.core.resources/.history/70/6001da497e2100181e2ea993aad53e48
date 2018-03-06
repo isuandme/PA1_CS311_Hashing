@@ -8,7 +8,6 @@ public class TESTER {
 		Random rand = new Random();
 		int range = 12;
 		HashTable table = new HashTable(range);
-		
 		Scanner userInput = new Scanner(System.in);
 		
 		table.add(new Tuple(rand.nextInt(range), "Yes"));
@@ -61,17 +60,9 @@ public class TESTER {
 		table.add(new Tuple(rand.nextInt(range), "好"));
 		
 		table.printTable();
-		/*
-		 * 
-		 * The following tests the search(Tuple t); method.
-		 * 
-		Tuple test1 = new Tuple(4, "你");
-		int i = table.search(test1);
-		System.out.println();
-		System.out.println("Test 1: " + i);
-		userInput.close();
-		*/
 		
+		String input = userInput.nextLine();
+		System.out.println("It worked");
 		
 	}
 }

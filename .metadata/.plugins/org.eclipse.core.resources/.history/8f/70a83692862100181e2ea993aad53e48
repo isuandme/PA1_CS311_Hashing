@@ -105,14 +105,4 @@ public class Tuple
 	public int getSize() {
 		return size;
 	}
-	
-	public Tuple search(Tuple t){
-		Tuple cur = this;
-		while(cur != null){
-			if(this.equals(t))
-				return this;
-			cur = cur.next;
-		}
-		return null;
-	}
 }

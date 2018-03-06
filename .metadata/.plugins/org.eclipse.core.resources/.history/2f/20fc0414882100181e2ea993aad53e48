@@ -75,20 +75,17 @@ public class HashTable
 
 	public int search(Tuple t)
 	{
-		int num = 0;
-		int h = hash.hash(t.getKey());
-		Tuple cur = table[h];
-		while(cur != null){
-			if(cur.equals(t))
-				num++;
-			cur = cur.getNext();
-		}
-		return num;
+		return 0;
 	}
 
 	public void remove(Tuple t)
 	{
-		
+		Tuple cur = table[0];
+		while(cur != null){
+			if(cur.equals(t)){
+				cur.remove();
+			}
+		}
 	}
 	
 	public void printTable(){

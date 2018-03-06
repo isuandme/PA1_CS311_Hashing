@@ -61,17 +61,13 @@ public class TESTER {
 		table.add(new Tuple(rand.nextInt(range), "好"));
 		
 		table.printTable();
-		/*
-		 * 
-		 * The following tests the search(Tuple t); method.
-		 * 
+		
+//		String input = userInput.nextLine();
+//		System.out.println("It worked");
 		Tuple test1 = new Tuple(4, "你");
 		int i = table.search(test1);
 		System.out.println();
 		System.out.println("Test 1: " + i);
 		userInput.close();
-		*/
-		
-		
 	}
 }

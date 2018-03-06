@@ -16,27 +16,64 @@ public class Tuple
 	// member fields and other member methods
 	private int key;
 	private String value;
+	private Tuple next;
+	private Tuple prev;
+	private int size;
+	
+	public Tuple(){
+		this.key = 0;
+		this.next = null;
+		this.prev = null;
+		this.size = 0;
+	}
 	
 	public Tuple(int keyP, String valueP)
 	{
-		key = keyP;
-		value = valueP;
+		this.key = keyP;
+		this.value = valueP;
 	}
-
+	
 	public int getKey()
 	{
 		return key;
 	}
-
 	public String getValue()
 	{
 		return value;
 	}
-
 	public boolean equals(Tuple t)
 	{
 		if(this.key == t.key && this.value.equals(t.value))
 			return true;	
 		return false;
+	}
+	public void print(){
+		Tuple temp = this;
+		while(temp.next != null){
+			temp = temp.next;
+			System.out.print("[" + temp.key + "," + temp.value + "] ");
+		}
+	}
+	public Tuple getNext(){
+		return this.next;
+	}
+	public Tuple getPrev(){
+		return this.prev;
+	}
+	public void add(Tuple t){
+		if(this.next == null){
+			this.next = t;
+			t.prev = this;
+		} else {
+			this.next.prev = t;
+			t.next = this.next;
+			t.prev = this;
+			this.next = t;
+		}
+		size++;
+	}
+
+	public int getSize() {
+		return size;
 	}
 }

@@ -12,6 +12,7 @@ public class HashFunction {
 	
 	public HashFunction(int range) {
 		p = findPrime(range);
+		System.out.println("p" + p + "\n");
 		Random r = new Random();
 		a = 0;
 		while (a==0)
@@ -40,7 +41,6 @@ public class HashFunction {
 			num++;
 		}
 		return -1;
-		
 	}
 	
 	private boolean isPrime(int n) {

@@ -1,0 +1,18 @@
+import java.util.Random;
+
+public class TESTER {
+
+	public static void main(String [] args){
+
+		Random rand = new Random();
+		HashTable table = new HashTable(10);
+		
+		table.add(new Tuple(rand.nextInt(50), "Yep"));
+		table.add(new Tuple(rand.nextInt(50), "nope"));
+		table.add(new Tuple(rand.nextInt(50), "Yep"));
+		table.add(new Tuple(rand.nextInt(50), "Sure"));
+		table.add(new Tuple(rand.nextInt(50), "Okay"));
+		table.add(new Tuple(rand.nextInt(50), "Yass"));
+		
+	}
+}

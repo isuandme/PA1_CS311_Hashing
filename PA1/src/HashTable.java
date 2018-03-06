@@ -14,31 +14,27 @@ import java.util.ArrayList;
 */
 
 public class HashTable
-{
-	// member fields and other member methods
-	private int size, numElements;
-	ArrayList<ArrayList<Tuple>> table;
-	HashFunction hash;
-
+{	
+	
+	private int size, numOfElements;
+	private HashFunction hash;
+	private Tuple[] table;
+	
 	public HashTable(int size)
 	{
 		// possibly check and see if size will be negative
-		this.size = size;
-		this.numElements = 0;
-		table = new ArrayList<ArrayList<Tuple>>(size);
+		this.numOfElements = 0;
+		this.size = findPrime(size);
 		hash = new HashFunction(size);
+		table = new Tuple[this.size];
+		for(int i = 0; i < this.size; i++){
+			table[i] = new Tuple();
+		}
 	}
 
 	public int maxLoad()
 	{
-		if(this.size == 0){
-			return 0;
-		}
-		int max = 0;
-		for(ArrayList<Tuple> i : table){
-			System.out.print(i.stream().distinct().count());
-		}
-		return max;
+		return 0;
 	}
 
 	public float averageLoad()
@@ -54,8 +50,7 @@ public class HashTable
 
 	public int numElements()
 	{
-		
-		return numElements;
+		return this.numOfElements;
 	}
 
 	public float loadFactor()
@@ -65,9 +60,10 @@ public class HashTable
 
 	public void add(Tuple t)
 	{
-		int tmp = hash.hash(t.getKey());
-		//System.out.println(tmp);
-		numElements++;
+		int h = hash.hash(t.getKey());
+		System.out.println(h);
+		table[h].add(t);
+		this.numOfElements++;
 	}
 
 	public ArrayList<Tuple> search(int k)
@@ -82,6 +78,33 @@ public class HashTable
 
 	public void remove(Tuple t)
 	{
-		numElements--;
+	}
+	
+	public void printTable(){
+		for(int i = 0; i < this.size; i++){
+			System.out.print("Hash<" + i + ">: ");
+			table[i].print();
+			System.out.println();
+		}
+	}
+	
+	
+	
+	private int findPrime(int n) {
+		boolean found = false;
+		int num = n;
+		while(!found) {
+			if (isPrime(num))
+				return num;
+			num++;
+		}
+		return -1;
+	}
+	
+	private boolean isPrime(int n) {
+		for(int i= 2; i<=Math.sqrt(n); i++)
+			if (n%i==0)
+				return false;
+		return true;
 	}
 }

@@ -69,8 +69,8 @@ public class HashTable
 		ArrayList<Tuple> ret = new ArrayList<Tuple>();
 		int h = hash.hash(k);
 		Tuple cur = table[h];
-		while(cur != null) {
-			ret.add(new Tuple(cur.getKey(), cur.getValue()));  		// Want to generate new Tuple for the ArrayList<Tuple>
+		while(h < table[h].getSize()){
+			ret.add(cur);
 			cur = cur.getNext();
 		}
 		return ret;

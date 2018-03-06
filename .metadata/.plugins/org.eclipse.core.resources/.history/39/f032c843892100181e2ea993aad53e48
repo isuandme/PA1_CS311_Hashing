@@ -20,7 +20,9 @@ public class HashTable
 	private HashFunction hash;
 	private Tuple[] table;
 	
-	public HashTable(int size) {
+	public HashTable(int size)
+	{
+		// possibly check and see if size will be negative
 		this.numOfElements = 0;
 		this.size = findPrime(size);
 		hash = new HashFunction(size);
@@ -69,20 +71,13 @@ public class HashTable
 		ArrayList<Tuple> ret = new ArrayList<Tuple>();
 		int h = hash.hash(k);
 		Tuple cur = table[h];
-		while(cur != null) {
-			ret.add(new Tuple(cur.getKey(), cur.getValue()));  		// Want to generate new Tuple for the ArrayList<Tuple>
+		while(h < table[h].getSize()){
+			ret.add(cur);
 			cur = cur.getNext();
 		}
 		return ret;
 	}
 
-	/**
-	 * search(Tuple t) finds all the number of Tuples in a hash value
-	 * provided by t.getKey(). The number gets the number of Tuples
-	 * in that hash value at index h.
-	 * @param Tuple t
-	 * @return int
-	 */
 	public int search(Tuple t)
 	{
 		int num = 0;
@@ -98,6 +93,7 @@ public class HashTable
 
 	public void remove(Tuple t)
 	{
+		
 	}
 	
 	public void printTable(){

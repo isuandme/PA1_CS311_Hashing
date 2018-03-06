@@ -73,7 +73,6 @@ public class TESTER {
 		userInput.close();
 		*/
 		
-		
 		/*
 		 * This method Tests the search(int k): method.
 		 

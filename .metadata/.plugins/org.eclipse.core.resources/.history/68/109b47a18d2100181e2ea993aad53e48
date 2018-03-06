@@ -70,7 +70,7 @@ public class HashTable
 		int h = hash.hash(k);
 		Tuple cur = table[h];
 		while(cur != null) {
-			ret.add(new Tuple(cur.getKey(), cur.getValue()));  		// Want to generate new Tuple for the ArrayList<Tuple>
+			ret.add(new Tuple(cur.getKey(), cur.getValue()));
 			cur = cur.getNext();
 		}
 		return ret;

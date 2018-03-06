@@ -73,16 +73,14 @@ public class TESTER {
 		userInput.close();
 		*/
 		
-		
 		/*
 		 * This method Tests the search(int k): method.
-		 
+		 */
 		int k = 4;
 		ArrayList<Tuple> test1 = table.search(k);
 		System.out.println(test1.size());
-		for(int i = 0; i < test1.size(); i++){
-			test1.get(i).print();
-		}
-		*/
+//		for(int i = 0; i < test1.size(); i++){
+//			test1.get(i).print();
+//		}
 	}
 }

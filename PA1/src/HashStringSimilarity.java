@@ -14,9 +14,20 @@
 public class HashStringSimilarity
 {
 	// member fields and other member methods
-
+	Tuple[] S, T;
+	HashTable SH, TH;
 	public HashStringSimilarity(String s1, String s2, int sLength)
 	{
+		S = new Tuple[s1.length() - sLength + 1];
+		T = new Tuple[s2.length() - sLength + 1];
+		
+		SH = new HashTable(s1.length() - sLength + 1);
+		TH = new HashTable(s2.length() - sLength + 1);
+		
+		char[] charr = new char[sLength];
+		int hashValue = 0, alpha = 31, alphaPow = 31;
+		
+		
 		// implementation
 	}
 

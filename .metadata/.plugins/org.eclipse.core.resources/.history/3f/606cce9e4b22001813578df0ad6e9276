@@ -31,7 +31,6 @@ public class Tuple
 	{
 		this.key = keyP;
 		this.value = valueP;
-		this.size = 0;
 	}
 	
 	public int getKey()
@@ -65,7 +64,7 @@ public class Tuple
 	public void print(){
 		Tuple temp = this;
 		while(temp != null){
-			System.out.print("[" + temp.key + "," + temp.value + "," + temp.size + "] ");
+			System.out.print("[" + temp.key + "," + temp.value + "] ");
 			temp = temp.next;
 		}
 	}

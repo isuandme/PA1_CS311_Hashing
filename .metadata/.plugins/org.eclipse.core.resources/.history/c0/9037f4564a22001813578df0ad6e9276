@@ -86,9 +86,7 @@ public class TESTER {
 		
 		table.printTable();
 	
-		table.add(new Tuple(3, "你"));
-		table.add(new Tuple(3, "你"));
-		table.add(new Tuple(3, "Jake"));
+		table.add(new Tuple(4, "你"));
 		table.add(new Tuple(4, "Jake"));
 		table.add(new Tuple(5, "Yes"));
 		table.add(new Tuple(6, "Okay"));

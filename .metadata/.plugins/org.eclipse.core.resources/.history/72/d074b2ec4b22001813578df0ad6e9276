@@ -65,17 +65,19 @@ public class HashTable
 		int h = hash.hash(t.getKey());
 		if(table[h] == null){
 			table[h] = new Tuple(t.getKey(), t.getValue());
-			table[h].increaseSize();
-			this.numOfElements++;
 		}else {
 			Tuple temp = this.table[h].search(t);
 			if(temp == null){
 				this.table[h].add(t);
-				this.numOfElements++;
 			} else {
 				temp.increaseSize();
 			}
 		}
+		this.numOfElements++;
+	}
+	
+	private void resize(Tuple[] t){
+		
 	}
 
 	/**

@@ -26,6 +26,7 @@ public class HashTable
 		this.size = findPrime(size);
 		hash = new HashFunction(size);
 		table = new Tuple[this.size];
+		tableSize = new int[this.size];
 	}
 
 	public int maxLoad()
@@ -78,7 +79,24 @@ public class HashTable
 				this.numOfElements++;
 			}
 		}
+		if(averageLoad() > .7){
+			HashTable tempTable = new HashTable(size*2);
+			table = tempTable.copy(table);
+		}
 	}
+	
+	public Tuple[] copy(Tuple[] oldTable){
+		for(int j = 0; j < oldTable.length; j++){
+			Tuple tempTuple = oldTable[j];
+			while(tempTuple != null){
+				this.add(tempTuple);
+				tempTuple = tempTuple.getNext();
+			}
+		}	
+		return this.table;
+	}
+	
+	 
 
 	/**
 	 * search(int k) takes in a number that will be the sudo "key" value 

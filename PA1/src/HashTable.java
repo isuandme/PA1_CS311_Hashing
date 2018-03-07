@@ -19,6 +19,7 @@ public class HashTable
 	private int size, numOfElements;
 	private HashFunction hash;
 	private Tuple[] table;
+	private int[] tableSize;
 	
 	public HashTable(int size) {
 		this.numOfElements = 0;
@@ -29,12 +30,12 @@ public class HashTable
 
 	public int maxLoad()
 	{
+		
 		return 0;
 	}
 
 	public float averageLoad()
 	{
-		// implementation
 		return 0;
 	}
 
@@ -65,7 +66,12 @@ public class HashTable
 		if(table[h] == null){
 			table[h] = new Tuple(t.getKey(), t.getValue());
 		}else {
-			this.table[h].add(t);
+			Tuple temp = this.table[h].search(t);
+			if(temp == null){
+				this.table[h].add(t);
+			} else {
+				temp.increaseSize();
+			}
 		}
 		this.numOfElements++;
 	}
@@ -127,7 +133,16 @@ public class HashTable
 	{
 		int h = hash.hash(t.getKey());
 		Tuple cur = table[h];
-		while(cur.getNext() != null){
+		while(cur != null){
+			if(cur.getPrev() == null){
+				
+				table[h] = cur.getNext();
+				cur.copyLeft();
+				cur.remove();
+			}
+			if(cur.getNext() == null){
+				
+			}
 			if(cur.equals(t)){
 				cur.remove();
 				this.numOfElements--;

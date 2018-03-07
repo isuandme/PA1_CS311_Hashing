@@ -20,7 +20,7 @@ public class Tuple
 	private Tuple prev;
 	private int size;
 	
-	public Tuple(){
+	public Tuple() {
 		this.key = 0;
 		this.next = null;
 		this.prev = null;
@@ -41,6 +41,14 @@ public class Tuple
 	{
 		return value;
 	}
+	
+	public void setKey(int key){
+		this.key = key;
+	}
+	
+	public void setValue(String value){
+		this.value = value;
+	}
 	public boolean equals(Tuple t)
 	{
 		if(this.key == t.key && this.value.equals(t.value))
@@ -58,6 +66,20 @@ public class Tuple
 			System.out.print("[" + temp.key + "," + temp.value + "] ");
 			temp = temp.next;
 		}
+	}
+	
+	public Tuple search(Tuple t){
+		Tuple temp;
+		if(this.equals(t))
+			return this;
+		temp = this;
+		while(temp != null){
+			if(temp.equals(t)){
+				return temp;
+			}
+			temp = temp.next;
+		}
+		return null;
 	}
 	
 	/**
@@ -96,19 +118,38 @@ public class Tuple
 	}
 	
 	public void remove(){
-		if(this.next == null){
-			this.prev.next = null;
-		} else if(this.prev == null){
-			this.key = this.next.key;
-			this.value = this.next.value;
-			this.next.remove();
-		} else {
-			this.next.prev = this.prev;
-			this.prev.next = this.next;
-		}
+		this.next.prev = this.prev;
+		this.prev.next = this.next;
 	}
 
 	public int getSize() {
 		return size;
 	}
+	
+	public void increaseSize(){
+		size++;
+	}
+	
+	public void decreaseSize(){
+		size--;
+		if(size == 0){
+			this.remove();
+		}
+	}
+	
+	public void copyLeft(){
+		this.prev.key = this.key;
+		this.prev.value = this.value;
+	}
+	
+	public void copyRight(){
+		this.next.key = this.key;
+		this.next.value = this.value;
+	}
+	
 }
+
+
+
+
+

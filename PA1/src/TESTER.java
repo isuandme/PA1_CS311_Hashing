@@ -66,7 +66,7 @@ public class TESTER {
         try
         {
         	long t =  System.currentTimeMillis();
-        	BruteForceSimilarity bs = new BruteForceSimilarity(shak1,shak2,8);
+        	HashStringSimilarity bs = new HashStringSimilarity(shak1,shak2,4);
         	
             System.out.println(bs.similarity());
             t = System.currentTimeMillis() - t;

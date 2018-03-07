@@ -25,10 +25,47 @@ public class HashStringSimilarity
 		TH = new HashTable(s2.length() - sLength + 1);
 		
 		char[] charr = new char[sLength];
-		int hashValue = 0, alpha = 31, alphaPow = 31;
+		char[] charrS2 = new char[sLength];
+		int hashValue = 0, firstVal = 0, hashValueS2 = 0, firstValS2 = 0, alpha = 31, alphaPow = 31;
 		
+		hashValue = s1.charAt(sLength-1);
+		charr[sLength - 1] = s1.charAt(sLength-1);
+		hashValueS2 = s2.charAt(sLength-1);
+		charrS2[sLength - 1] = s2.charAt(sLength-1);
 		
-		// implementation
+		for(int i = sLength - 2; i >= 0; i --){
+			charr[i] = s1.charAt(i);
+			charrS2[i] = s2.charAt(i);
+			if(i == 0){
+				firstVal = Math.abs(s1.charAt(i) * alphaPow);
+				hashValue = Math.abs(hashValue + firstVal);
+				
+				firstValS2 = Math.abs(s2.charAt(i) * alphaPow);
+				hashValueS2 = Math.abs(hashValueS2 + firstValS2);
+			}else{
+				hashValue = Math.abs(hashValue + Math.abs(s1.charAt(i) * alphaPow));
+				hashValueS2 = Math.abs(hashValueS2 + Math.abs(s2.charAt(i) * alphaPow));
+				alphaPow = alphaPow * alpha;
+			}
+		}
+		S[0] = new Tuple(hashValue, new String(charr));
+		SH.add(S[0]);
+		T[0] = new Tuple(hashValueS2, new String(charrS2));
+		TH.add(T[0]);
+		
+		for(int i = 1; i <= s1.length() - sLength; i++ ){
+			hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
+			firstVal = Math.abs(s1.charAt(i) *alphaPow);
+			S[i] = new Tuple(hashValue, s1.substring(i, i+ sLength));
+			SH.add(S[i]);
+		}
+		
+		for(int i = 1; i <= s2.length() - sLength; i++ ){
+			hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
+			firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
+			T[i] = new Tuple(hashValueS2, s2.substring(i, i + sLength));
+			TH.add(T[i]);
+		}
 	}
 
 	public float lengthOfS1()

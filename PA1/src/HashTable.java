@@ -64,6 +64,13 @@ public class HashTable
 		this.numOfElements++;
 	}
 
+	/**
+	 * search(int k) takes in a number that will be the sudo "key" value 
+	 * then finds that hash index and adds each element to the ArrayList.
+	 * 
+	 * @param int
+	 * @return ArrayList<Tuple>
+	 */
 	public ArrayList<Tuple> search(int k)
 	{
 		ArrayList<Tuple> ret = new ArrayList<Tuple>();
@@ -98,6 +105,15 @@ public class HashTable
 
 	public void remove(Tuple t)
 	{
+		int h = hash.hash(t.getKey());
+		Tuple cur = table[h];
+		while(cur != null){
+			if(cur.equals(t)){
+				
+			} 
+			cur = cur.getNext();
+		}
+		this.numOfElements--;
 	}
 	
 	public void printTable(){

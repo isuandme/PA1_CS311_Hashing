@@ -61,7 +61,7 @@ public class Tuple
 	}
 	
 	/**
-	 * Standard get next hing whatever.
+	 * Standard get next thing whatever.
 	 * @return Tuple
 	 */
 	public Tuple getNext(){
@@ -70,7 +70,6 @@ public class Tuple
 	
 	/**
 	 * GETS THE PREVIOUS ONE DUHHH
-	 * 
 	 * @return Tuple
 	 */
 	public Tuple getPrev(){
@@ -95,24 +94,19 @@ public class Tuple
 		}
 		size++;
 	}
+	
 	public void remove(){
-		this.next.prev = this.prev;
-		this.prev.next = this.next;
-		this.prev = null;
-		this.next = null;
+		if(this.next == null){
+			this.prev.next = null;
+			this.prev = null;
+		} else if(this.prev == null){
+			
+		} else {
+			
+		}
 	}
 
 	public int getSize() {
 		return size;
-	}
-	
-	public Tuple search(Tuple t){
-		Tuple cur = this;
-		while(cur != null){
-			if(this.equals(t))
-				return this;
-			cur = cur.next;
-		}
-		return null;
 	}
 }

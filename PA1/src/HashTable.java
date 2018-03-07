@@ -65,14 +65,16 @@ public class HashTable
 	{
 		int h = hash.hash(t.getKey());
 		if(table[h] == null){
-			table[h] = new Tuple(t.getKey(), t.getValue());
-			table[h].increaseSize();
+			this.table[h] = new Tuple(t.getKey(), t.getValue());
+			this.table[h].increaseSize();
+			this.tableSize[h]++;
 			this.numOfElements++;
 		}else {
 			Tuple temp = this.table[h].search(t);
 			if(temp == null){
 				this.table[h].add(t);
 				this.table[h].getNext().increaseSize();
+				this.tableSize[h]++;
 				this.numOfElements++;
 			} else {
 				temp.increaseSize();
@@ -178,6 +180,8 @@ public class HashTable
 			} else { 
 				System.out.print("Hash<" + i + ">: ");
 				table[i].print();
+				System.out.println();
+				System.out.println("Size of each List:" + this.tableSize.toString());
 				System.out.println();
 			}
 		}

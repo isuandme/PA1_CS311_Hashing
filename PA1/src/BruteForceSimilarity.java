@@ -10,112 +10,159 @@ import java.util.ArrayList;
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Hugh Potter & Bradley Bales
+* @author Hadis Fetic
 */
 
+//Created a Pair because I didnt want to change Tuple
+class Pair{
+	private String value;
+	private int count;
+	Pair(String value){
+		this.value = value;
+		this.count = 0;
+	}
+	
+	public String getVal(){
+		return value;
+	}
+	public int getCount(){
+		return count;
+	}
+	public void setCount(int i){
+		count = i;
+	}
+}
 public class BruteForceSimilarity {
 
 	int sLength;
-	ArrayList<String> S, T, //Shingles of s1 and s2 respectfully
-			SNoDup, TNoDup; // Without duplication
-	int[] occurance1, occurance2;
+	Pair[] S, T, SnoDup, TnoDup; //Shingles of s1 and s2 respectfully
 	
 	BruteForceSimilarity(String s1, String s2, int sLength) {
-		int i, j, k;
+		int k;
+		//check to see if sLength is larger then either string.
+		if(sLength> s1.length() || sLength > s2.length()){
+			throw new NullPointerException();
+		}
+		//initialize all the values;
+		S 			 = new Pair[s1.length() - sLength + 1];
+		T 			 = new Pair[s2.length() - sLength + 1];
+		
+		//we cannot have more duplicates then substrings so this is as large of an array as we need.
+		SnoDup 		 = new Pair[s1.length() - sLength + 1];
+		TnoDup 		 = new Pair[s2.length() - sLength + 1];
 		char[] charr = new char[sLength];
 		this.sLength = sLength;
-		SNoDup = TNoDup = null;
 		
+		
+		//create a Mset of pair values 
 		k = s1.length() - sLength;
-		for(i = 0; i < k; i++) {
-			for(j = 0; j < sLength; j++) {
+		for(int i = 0; i <= k; i++) 
+		{
+			for(int j = 0; j < sLength; j++) 
+			{
 				charr[j] = s1.charAt(i + j);
 			}
-			S.add(new String(charr));
+			S[i] = new Pair(new String(charr));
 		}
 		
 		k = s2.length() - sLength;
-		for(i = 0; i < k; i++) {
-			for(j = 0; j < sLength; j++) {
+		for(int i = 0; i <= k; i++) 
+		{
+			for(int j = 0; j < sLength; j++) 
+			{
 				charr[j] = s2.charAt(i + j);
 			}
-			T.add(new String(charr));
+			T[i] = new Pair(new String(charr));
 		}
 		return;
 	}
 	
-	public float lengthOfS1() {
-		return vectorLength(S, true); //STUB
+	public float lengthOfS1() 
+	{
+		return vectorLength(S,true); //STUB
 	}
 	
-	public float lengthOfS2() {
-		return vectorLength(T, false);
+	public float lengthOfS2() 
+	{
+		return vectorLength(T,false);
 	}
 	
-	public float similarity() {
-		int i, j;
+	public float similarity() 
+	{
 		float d = lengthOfS1() * lengthOfS2(), //Denominator.
 				n = 0;
 		
-		//Determining the numerator. 
-		//NOTE: we only have to do this once since the numerator is determined by |i in s1| * |i in s2|, meaning that if one of the elements
-		//		existed only in one of the strings, there's no need to find it in the second array.
-		if(SNoDup.size() < TNoDup.size()) {
-			for(i = 0; i < SNoDup.size(); i++) {
-				j = 0;
-				while(j < TNoDup.size()) {
-					if(SNoDup.get(i).equals(TNoDup.get(j))){
-						n += occurance1[i] * occurance2[j];
-						break;
-					}
-					j++;
-				}
-			}
-		}else{
-			for(i = 0; i < TNoDup.size(); i++) {
-				j = 0;
-				while(j < SNoDup.size()) {
-					if(TNoDup.get(i).equals(SNoDup.get(j))){
-						n += occurance2[i] * occurance1[j];
-						break;
-					}
-					j++;
-				}
-			}
-		}
 		
+		for(int i = 0; i < SnoDup.length; i++)
+		{
+			//If we reached a null value that means we have no more pairs and can break out of the loop.
+			if(SnoDup[i] == null)
+			{
+				break;
+			}
+			
+			for(int j = 0; j < TnoDup.length; j++)
+			{
+				//We ran out of pairs.
+				if(TnoDup[j] == null)
+				{
+					break;
+				}
+				
+				if(SnoDup[i].getVal().equals(TnoDup[j].getVal())){
+					n += SnoDup[i].getCount() * TnoDup[j].getCount();
+					break;
+				}
+				
+			}
+			
+		}
+	
 		return n / d;
 	}
 	
-	private float vectorLength(ArrayList<String> list, boolean isS1) {
-		int i, j;
-		float r = 0;
-		ArrayList<String> lis = new ArrayList<String>(list);// Copying so that we can remove elements;
-		int[] occurance = new int[lis.size()];
+	private float vectorLength(Pair[] list,boolean SorT) {
+		int value = 0;
 		
-		// Getting occurance of each element.
-		for(i = 0; i < lis.size(); i++) {
-			occurance[i] = 1;
-			j = i + 1;
-			while(j < lis.size()) {
-				if(lis.get(i).equals(lis.get(j))) {
-					lis.remove(j);
-					occurance[j]++;
-				}else {
-					j++;
-				}
-			}
-		}
-		for(i = 0; i < lis.size(); i++) {
-			r += occurance[i]*occurance[i];
-		}
-		if(isS1) {//Spaghetti code, I know
-			occurance1 = occurance;
-			SNoDup = new ArrayList<String>(lis);
+		//we need a count to keep track of where to add new duplicate pair.
+		int dupCount = 0;
+		int counter;
+		Pair[] tmp;
+		
+		//Determine which set we are dealing with, and assigns tmp as a reference;
+		if(SorT){
+			tmp = SnoDup;
 		}else{
-			occurance2 = occurance;
-			TNoDup = new ArrayList<String>(lis);
+			tmp = TnoDup;
 		}
-		return (float) Math.sqrt(r); 
+		
+		for(int i = 0; i < list.length; i++){
+			counter = 1;
+			
+			//If we already visited this value then skip this iteration.
+			if(list[i].getCount() == 1){
+				continue;
+			}
+			
+			//indicate we have visited this value now.
+			list[i].setCount(1);
+			
+			
+			tmp[dupCount] = new Pair(list[i].getVal());
+
+			for (int j = i; j < list.length; j++){
+				if (list[i].getVal().equals(list[j].getVal()) && list[j].getCount() == 0){
+					list[j].setCount(1);
+					counter++;}
+			}
+
+			tmp[dupCount].setCount(counter);
+			dupCount ++;
+			
+        	value += counter*counter;
+		}
+		
+		//apparently Math.sqrt is O(1)
+		return (float) Math.sqrt(value);
 	}
 }

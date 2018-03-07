@@ -100,7 +100,7 @@ public class Tuple
 			this.prev.next = null;
 		} else if(this.prev == null){
 			this.key = this.next.key;
-			this.value = this.next.value;
+			this.value.equals(this.next.value);
 			this.next.remove();
 		} else {
 			this.next.prev = this.prev;

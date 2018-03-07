@@ -104,6 +104,7 @@ public class TESTER {
 		System.out.println();
 		table.remove(test3);
 		table.printTable();
+		
 		System.out.println();
 		table.remove(test3);
 		table.printTable();

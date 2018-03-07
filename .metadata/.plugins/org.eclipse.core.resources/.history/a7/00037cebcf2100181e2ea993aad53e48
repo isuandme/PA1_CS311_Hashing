@@ -91,31 +91,17 @@ public class TESTER {
 		 * The follwing code tests the remove method in HashTable
 		 */
 		System.out.println();
+		System.out.println();
+		System.out.println();
 		Tuple test2 = new Tuple(4, "Jake");
 		Tuple test3 = new Tuple(4, "你");
 		table.remove(test2);
 		table.printTable();
-		System.out.println();
-		table.remove(test3);
+		table.remove(test2);
 		table.printTable();
-		System.out.println();
-		table.remove(test3);
-		table.printTable();
-		System.out.println();
-		table.remove(test3);
-		table.printTable();
-		System.out.println();
-		table.remove(test3);
-		table.printTable();
-		System.out.println();
-		table.remove(test3);
-		table.printTable();
-		System.out.println();
-		table.remove(test3);
-		table.printTable();
-		System.out.println();
-		table.remove(test3);
-		table.printTable();
+		
+		
+		
 		
 		userInput.close();
 	}

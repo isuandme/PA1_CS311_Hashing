@@ -98,13 +98,11 @@ public class Tuple
 	public void remove(){
 		if(this.next == null){
 			this.prev.next = null;
+			this.prev = null;
 		} else if(this.prev == null){
-			this.key = this.next.key;
-			this.value = this.next.value;
-			this.next.remove();
+			
 		} else {
-			this.next.prev = this.prev;
-			this.prev.next = this.next;
+			
 		}
 	}
 

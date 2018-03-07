@@ -99,9 +99,7 @@ public class Tuple
 		if(this.next == null){
 			this.prev.next = null;
 		} else if(this.prev == null){
-			this.key = this.next.key;
-			this.value = this.next.value;
-			this.next.remove();
+			this.next.prev = this;
 		} else {
 			this.next.prev = this.prev;
 			this.prev.next = this.next;

@@ -71,11 +71,9 @@ public class HashTable
 			Tuple temp = this.table[h].search(t);
 			if(temp == null){
 				this.table[h].add(t);
-				this.table[h].getNext().increaseSize();
 				this.numOfElements++;
 			} else {
 				temp.increaseSize();
-				this.numOfElements++;
 			}
 		}
 	}
@@ -93,7 +91,7 @@ public class HashTable
 		int h = hash.hash(k);
 		Tuple cur = table[h];
 		while(cur != null) {
-			ret.add(new Tuple(cur.getKey(), cur.getValue()));  		
+			ret.add(new Tuple(cur.getKey(), cur.getValue()));  		// Want to generate new Tuple for the ArrayList<Tuple>
 			cur = cur.getNext();
 		}
 		return ret;
@@ -163,10 +161,6 @@ public class HashTable
 				System.out.println();
 			}
 		}
-	}
-	
-	public void printNumElements(){
-		System.out.println("numElements:" + this.numOfElements);
 	}
 	
 	private int findPrime(int n) {

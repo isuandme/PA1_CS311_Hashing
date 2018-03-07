@@ -86,16 +86,23 @@ public class TESTER {
 		
 		table.printTable();
 	
-		table.add(new Tuple(3, "one"));
-		table.add(new Tuple(4, "two"));
-		table.add(new Tuple(5, "three"));
-		table.add(new Tuple(6, "four"));
-		table.add(new Tuple(7, "five"));
-		table.add(new Tuple(7, "five"));
-		table.add(new Tuple(7, "six"));
+		table.add(new Tuple(3, "你"));
+		table.add(new Tuple(3, "你"));
+		table.add(new Tuple(3, "Jake"));
+		table.add(new Tuple(4, "Jake"));
+		table.add(new Tuple(5, "Yes"));
+		table.add(new Tuple(6, "Okay"));
+		table.add(new Tuple(7, "Fine"));
+		table.add(new Tuple(8, "Whynot"));
+		table.add(new Tuple(3, "Jake"));
+		table.add(new Tuple(4, "Jake"));
+		table.add(new Tuple(5, "Yes"));
+		table.add(new Tuple(6, "Okay"));
+		table.add(new Tuple(7, "Fine"));
+		table.add(new Tuple(8, "Whynot"));
 		table.printTable();
+		
 		System.out.println();
-		table.printNumElements();
 		
 		userInput.close();
 

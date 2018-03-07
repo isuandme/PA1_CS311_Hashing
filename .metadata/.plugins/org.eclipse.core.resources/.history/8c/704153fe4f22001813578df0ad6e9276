@@ -116,6 +116,7 @@ public class Tuple
 			t.prev = this;
 			this.next = t;
 		}
+		size++;
 	}
 	
 	public void remove(){

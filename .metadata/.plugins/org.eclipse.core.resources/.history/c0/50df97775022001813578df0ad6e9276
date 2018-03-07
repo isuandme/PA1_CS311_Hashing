@@ -75,7 +75,6 @@ public class HashTable
 				this.numOfElements++;
 			} else {
 				temp.increaseSize();
-				this.numOfElements++;
 			}
 		}
 	}
@@ -163,10 +162,6 @@ public class HashTable
 				System.out.println();
 			}
 		}
-	}
-	
-	public void printNumElements(){
-		System.out.println("numElements:" + this.numOfElements);
 	}
 	
 	private int findPrime(int n) {

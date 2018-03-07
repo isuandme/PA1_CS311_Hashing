@@ -24,20 +24,31 @@ public class HashTable
 	public HashTable(int size) {
 		this.numOfElements = 0;
 		this.size = findPrime(size);
-		hash = new HashFunction(size);
-		table = new Tuple[this.size];
-		tableSize = new int[this.size];
+		this.hash = new HashFunction(size);
+		this.table = new Tuple[this.size];
+		this.tableSize = new int[this.size];
 	}
 
 	public int maxLoad()
 	{
-		
-		return 0;
+		int max = 0;
+		for(int i = 0; i < tableSize.length; i++){
+			if(tableSize[i] > max)
+				max = tableSize[i];
+		}
+		return max;
 	}
 
 	public float averageLoad()
 	{
-		return 0;
+		int sum = 0;
+		int count = 0;
+		for(int i = 0; i < tableSize.length; i++)
+			if(table[i] != null){
+				count++;
+				sum = sum + tableSize[i];
+			}
+		return sum / count;
 	}
 
 	public int size()
@@ -47,12 +58,16 @@ public class HashTable
 
 	public int numElements()
 	{
-		return this.numOfElements;
+		int count = 0;
+		for(int i = 0; i < this.size; i++){
+			count = count + this.tableSize[i];
+		}
+		return count;
 	}
-
+	
 	public float loadFactor()
 	{
-		return 0;
+		return (float) numElements() / size;
 	}
 	
 	/**
@@ -68,17 +83,14 @@ public class HashTable
 			this.table[h] = new Tuple(t.getKey(), t.getValue());
 			this.table[h].increaseSize();
 			this.tableSize[h]++;
-			this.numOfElements++;
 		}else {
 			Tuple temp = this.table[h].search(t);
 			if(temp == null){
 				this.table[h].add(t);
 				this.table[h].getNext().increaseSize();
 				this.tableSize[h]++;
-				this.numOfElements++;
 			} else {
 				temp.increaseSize();
-				this.numOfElements++;
 			}
 		}
 		if(averageLoad() > .7){

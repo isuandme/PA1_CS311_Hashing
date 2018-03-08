@@ -61,33 +61,32 @@ public class TESTER {
         shak2=shak2.replaceAll("[^a-zA-Z0-9 ]", ""); 
         shak2=shak2.toLowerCase();
         //System.out.println("Shak1: "+ shak1.length() + " Shak2: "+ shak2.length());
-      try
-        {
+     // try
+     //   {
         	
         	long t;
             
+        	t =  System.currentTimeMillis();
         	BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,8);
-        	
-            t =  System.currentTimeMillis();
             System.out.println("Brute Force Similarity: " + BF.similarity());
             t = System.currentTimeMillis() - t;
             System.out.println("Brute Force time in MS: " + t);
             
+        	t =  System.currentTimeMillis();
             HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,8);
         	
-        	t =  System.currentTimeMillis();
             System.out.println("Hash String Similarity: "+ SS.similarity());
             t = System.currentTimeMillis() - t;
             System.out.println("Hash String time in MS: "+t);
             
+        	t =  System.currentTimeMillis();
             HashCodeSimilarity HC = new HashCodeSimilarity(shak1,shak2,8);
         	
-        	t =  System.currentTimeMillis();
             System.out.println("Hash Code Similarity: "+HC.similarity());
             t = System.currentTimeMillis() - t;
             System.out.println("Hash Code time in MS: "+t);
-       }
-       catch(NullPointerException e)
+     //  }
+      /* catch(NullPointerException e)
         {
             System.out.println("sLength cannot be larger then either of the strings!");
         }

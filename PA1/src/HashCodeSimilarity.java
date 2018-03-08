@@ -10,17 +10,20 @@ import java.util.ArrayList;
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Hugh Potter
+* @author Hadis Fetic
 */
 
 public class HashCodeSimilarity
 {
-	// member fields and other member methods
-	// member fields and other member methods
+
 		Tuple[] S, T, SnoDup, TnoDup;
 		HashTable SH, TH, UH;
 		public HashCodeSimilarity(String s1, String s2, int sLength)
 		{
+			
+			if(sLength> s1.length() || sLength > s2.length()){
+				throw new NullPointerException();
+			}
 			S = new Tuple[s1.length() - sLength + 1];
 			T = new Tuple[s2.length() - sLength + 1];
 
@@ -29,13 +32,14 @@ public class HashCodeSimilarity
 			
 			SH = new HashTable(s1.length() - sLength + 1);
 			TH = new HashTable(s2.length() - sLength + 1);
-			UH = new HashTable((s2.length() + s1.length()) - sLength + 1);
 			
 			char[] charr = new char[sLength];
 			char[] charrS2 = new char[sLength];
 			long hashValue = 0, firstVal = 0, hashValueS2 = 0, firstValS2 = 0;
 			long alpha = 31, alphaPow = 31;
 			
+			
+			//initial hashing
 			hashValue = s1.charAt(sLength-1);
 			charr[sLength - 1] = s1.charAt(sLength-1);
 			hashValueS2 = s2.charAt(sLength-1);
@@ -56,29 +60,25 @@ public class HashCodeSimilarity
 					alphaPow = alphaPow * alpha;
 				}
 			}
-			S[0] = new Tuple((int) hashValue, "");
+			S[0] = new Tuple((int) hashValue);
 			SH.add(S[0]);
-			UH.add(new Tuple((int) hashValue, ""));
 
-			T[0] = new Tuple((int) hashValueS2, "");
-			TH.add(new Tuple((int) hashValueS2, ""));
-			UH.add(new Tuple((int) hashValueS2, ""));
-
+			T[0] = new Tuple((int) hashValueS2);
+			TH.add(new Tuple((int) hashValueS2));
 			
+			//rollover hashing
 			for(int i = 1; i <= s1.length() - sLength; i++ ){
 				hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
 				firstVal = Math.abs(s1.charAt(i) *alphaPow);
-				S[i] = new Tuple((int) hashValue, "");
-				SH.add(S[i]);
-				UH.add(new Tuple((int) hashValue, ""));
+				S[i] = new Tuple((int) hashValue);
+				SH.add(new Tuple((int) hashValue));
 			}
 			
 			for(int i = 1; i <= s2.length() - sLength; i++ ){
 				hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
 				firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
-				T[i] = new Tuple((int) hashValueS2, "");
-				TH.add(new Tuple((int) hashValueS2, ""));
-				UH.add(new Tuple((int) hashValueS2, ""));
+				T[i] = new Tuple((int) hashValueS2);
+				TH.add(new Tuple((int) hashValueS2));
 			}
 		}
 
@@ -105,7 +105,7 @@ public class HashCodeSimilarity
 				}
 				n += SH.search(SnoDup[i]) * TH.search(SnoDup[i]);
 			}
-			System.out.println("N: " + n);
+
 			return n/d;
 		}
 		
@@ -160,7 +160,7 @@ public class HashCodeSimilarity
 				}
 				
 			}
-			System.out.println(value);
+
 			return (float) Math.sqrt(value);
 		}
 }

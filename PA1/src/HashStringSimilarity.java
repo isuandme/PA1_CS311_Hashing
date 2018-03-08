@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Hugh Potter
+* @author Hadis Fetic
 */
 
 public class HashStringSimilarity
@@ -20,6 +20,9 @@ public class HashStringSimilarity
 	HashTable SH, TH;
 	public HashStringSimilarity(String s1, String s2, int sLength)
 	{
+		if(sLength> s1.length() || sLength > s2.length()){
+			throw new NullPointerException();
+		}
 		S = new Tuple[s1.length() - sLength + 1];
 		T = new Tuple[s2.length() - sLength + 1];
 

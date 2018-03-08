@@ -4,21 +4,52 @@ public class TEST_jake {
 
 	static public void main(String args[]){
 		
-		Random rand = new Random();
 		
+		int elements = 17;
+		int range = 10;
+		
+		
+		Random rand = new Random(20);
 		char[] charArr = "abcd".toCharArray();
 		
-		HashTable testTable = new HashTable(50);
+		HashTable table = new HashTable(range);
 		
-		for(int i = 0; i < 10; i++){
+		
+		/*
+		
+		for(int i = 0; i < elements; i++){
 			String str = "";
-//			for(int j = 0; j < 4; j++){
-//				int r = Math.abs(rand.nextInt() % charArr.length);
-//				str = str + charArr[r];
-//			}
-			//testTable.add(new Tuple(rand.nextInt(), str));
+			for(int j = 0; j < charArr.length; j++){
+				str = str + charArr[rand.nextInt(charArr.length)];
+			}
+			table.add(new Tuple(rand.nextInt(range), str));
 		}
-		testTable.printTable();
+		*/
+		
+		table.add(new Tuple(20, "Yea"));
+		table.add(new Tuple(20, "Yeh"));
+		table.add(new Tuple(20, "Yah"));
+		table.add(new Tuple(20, "eah"));
+		table.add(new Tuple(20, "yeah"));
+		table.add(new Tuple(20, "eah"));
+		table.add(new Tuple(20, "eahy"));
+
+		table.add(new Tuple(20, "Yeh"));
+		table.add(new Tuple(20, "Yah"));
+		table.add(new Tuple(20, "eah"));
+		table.add(new Tuple(20, "yeah"));
+		table.add(new Tuple(20, "eah"));
+		table.add(new Tuple(20, "eahy"));
+		
+		table.printTable();
+		System.out.println();
+		table.remove(new Tuple(20, "Yea"));
+		table.printTable();
+		System.out.println();
+		
+		
+		
+		
 	}
 	
 }

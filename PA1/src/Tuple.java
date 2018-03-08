@@ -26,7 +26,6 @@ public class Tuple {
 		this.value = valueP;
 		this.next = null;
 		this.prev = null;
-		this.size = 0;
 	}
 
 	public void setVisted(boolean visited) {

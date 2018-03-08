@@ -42,16 +42,16 @@ public class HashTable {
 	}
 
 	public float averageLoad() {
-		int count = 0; 
-		int sum = 0;
-		for (int i = 0; i < this.table.length; i++) {
-			sum = sum + tableSize[i];
+		int count = 0;
+		for (int i = 0; i < table.length; i++) {
 			if (table[i] != null){
 				count++;
 			}
 		}
-		System.out.println(Arrays.toString(this.tableSize)); 
-		return (float) sum / count;
+		if(count > 0){
+			return (float) numElements() / count;
+		}
+		return (float) 0.0;
 	}
 
 	public int size() {
@@ -129,15 +129,14 @@ public class HashTable {
 		int num = 0;
 		int h = hash.hash(t.getKey());
 		Tuple cur = table[h];
+		if(table[h] == null){
+			return 0;
+		}
 		while(cur != null){
-			if(cur.getValue() == null){
-				if(cur.getKey() == t.getKey()){
-					num = cur.getSize();
-					break;
-				}
-			}else if(cur.equals(t)){
+			if(cur.equals(t)){
 				num = cur.getSize();
-				break;}
+				break;
+			}
 			cur = cur.getNext();
 		}
 		return num;
@@ -145,9 +144,22 @@ public class HashTable {
 
 	public void remove(Tuple t) {
 		int h = hash.hash(t.getKey());
-		Tuple temp = this.table[t.getKey()];
-		
+		Tuple temp = this.table[h];
+		if(temp.getPrev() == null){
+			temp = temp.getNext();
+			temp.copyLeft();
+			temp.remove();
+		} else if (temp.getNext() == null) {
+			temp = temp.getPrev();
+			temp.copyRight();
+			temp.remove();
+		} else {
+			temp.remove();
+		}
 	}
+	
+	
+	
 
 	/******************** BELOW ARE PRINT METHODS ******************/
 

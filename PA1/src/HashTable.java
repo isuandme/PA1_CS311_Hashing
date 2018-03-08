@@ -113,7 +113,7 @@ public class HashTable
 		int h = hash.hash(k);
 		Tuple cur = table[h];
 		while(cur != null) {
-			ret.add(new Tuple(cur.getKey(), cur.getValue()));  		
+			ret.add(cur);  		
 			cur = cur.getNext();
 		}
 		return ret;
@@ -133,8 +133,7 @@ public class HashTable
 		Tuple cur = table[h];
 		while(cur != null){
 			if(cur.equals(t))
-				num++;
-			cur = cur.getNext();
+				num = cur.getSize();
 		}
 		return num;
 	}

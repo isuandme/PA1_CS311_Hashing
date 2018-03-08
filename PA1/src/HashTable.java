@@ -26,6 +26,7 @@ public class HashTable
 		this.size = findPrime(size);
 		hash = new HashFunction(size);
 		table = new Tuple[this.size];
+		tableSize = new int[this.size];
 	}
 
 	public int maxLoad()
@@ -64,21 +65,40 @@ public class HashTable
 	{
 		int h = hash.hash(t.getKey());
 		if(table[h] == null){
-			table[h] = new Tuple(t.getKey(), t.getValue());
-			table[h].increaseSize();
+			this.table[h] = new Tuple(t.getKey(), t.getValue());
+			this.table[h].increaseSize();
+			this.tableSize[h]++;
 			this.numOfElements++;
 		}else {
 			Tuple temp = this.table[h].search(t);
 			if(temp == null){
 				this.table[h].add(t);
 				this.table[h].getNext().increaseSize();
+				this.tableSize[h]++;
 				this.numOfElements++;
 			} else {
 				temp.increaseSize();
 				this.numOfElements++;
 			}
 		}
+		if(averageLoad() > .7){
+			HashTable tempTable = new HashTable(size*2);
+			table = tempTable.copy(table);
+		}
 	}
+	
+	public Tuple[] copy(Tuple[] oldTable){
+		for(int j = 0; j < oldTable.length; j++){
+			Tuple tempTuple = oldTable[j];
+			while(tempTuple != null){
+				this.add(tempTuple);
+				tempTuple = tempTuple.getNext();
+			}
+		}	
+		return this.table;
+	}
+	
+	 
 
 	/**
 	 * search(int k) takes in a number that will be the sudo "key" value 
@@ -160,6 +180,8 @@ public class HashTable
 			} else { 
 				System.out.print("Hash<" + i + ">: ");
 				table[i].print();
+				System.out.println();
+				System.out.println("Size of each List:" + this.tableSize.toString());
 				System.out.println();
 			}
 		}

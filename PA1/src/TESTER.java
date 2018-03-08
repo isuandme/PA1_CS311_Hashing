@@ -93,6 +93,12 @@ public class TESTER {
 		table.add(new Tuple(7, "five"));
 		table.add(new Tuple(7, "five"));
 		table.add(new Tuple(7, "six"));
+		table.add(new Tuple(7, "five"));
+		table.add(new Tuple(7, "five"));
+		table.add(new Tuple(7, "six"));
+		table.add(new Tuple(7, "five"));
+		table.add(new Tuple(7, "five"));
+		table.add(new Tuple(7, "six"));
 		table.printTable();
 		System.out.println();
 		table.printNumElements();

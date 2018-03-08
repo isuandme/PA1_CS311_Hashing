@@ -19,6 +19,7 @@ public class Tuple
 	private Tuple next;
 	private Tuple prev;
 	private int size;
+	private boolean visited;
 	
 	public Tuple() {
 		this.key = 0;
@@ -32,6 +33,14 @@ public class Tuple
 		this.key = keyP;
 		this.value = valueP;
 		this.size = 0;
+	}
+	
+	public void setVisted(boolean visited){
+		this.visited = visited;
+	}
+	
+	public boolean getVisted(){
+		return visited;
 	}
 	
 	public int getKey()

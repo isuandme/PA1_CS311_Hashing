@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,12 +43,9 @@ public class HashTable {
 	}
 
 	public float averageLoad() {
-		int sum = 0;
-		for (int i = 0; i < this.tableSize.length; i++) {
-			sum = sum + tableSize[i];
-		}
-		int count = 0;
+		int count = 0, sum = 0;
 		for (int i = 0; i < this.table.length; i++) {
+			sum = sum + tableSize[i];
 			if (table[i] != null)
 				count++;
 		}
@@ -130,8 +126,9 @@ public class HashTable {
 		int h = hash.hash(t.getKey());
 		Tuple cur = table[h];
 		while(cur != null){
-			if(cur.equals(t))
-				num = cur.getSize();
+			if(cur.equals(t)){
+				num = cur.getSize();}
+			cur = cur.getNext();
 		}
 		return num;
 	}

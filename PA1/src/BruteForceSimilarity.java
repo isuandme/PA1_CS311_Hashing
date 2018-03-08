@@ -118,6 +118,7 @@ public class BruteForceSimilarity {
 			
 		}
 	
+		System.out.println(n);
 		return n / d;
 	}
 	
@@ -128,14 +129,17 @@ public class BruteForceSimilarity {
 		int dupCount = 0;
 		int counter;
 		Pair[] tmp;
+		int testCount = 0;
 		
 		//Determine which set we are dealing with, and assigns tmp as a reference;
+		int totalNum = 0;
 		if(SorT){
 			tmp = SnoDup;
+
 		}else{
 			tmp = TnoDup;
+
 		}
-		
 		for(int i = 0; i < list.length; i++){
 			counter = 1;
 			
@@ -158,11 +162,14 @@ public class BruteForceSimilarity {
 
 			tmp[dupCount].setCount(counter);
 			dupCount ++;
-			
+			if(counter > 2){
+				testCount ++;
+			}
         	value += counter*counter;
 		}
 		
 		//apparently Math.sqrt is O(1)
+		System.out.println( value);
 		return (float) Math.sqrt(value);
 	}
 }

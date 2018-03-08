@@ -16,13 +16,13 @@ import java.util.Arrays;
 
 public class HashTable {
 
-	private int size, totalElements;
+	private int size;
 	private HashFunction hash;
 	private Tuple[] table;
 	private int[] tableSize;
 
 	public HashTable(int size) {
-		this.totalElements = 0;
+
 		this.size = findPrime(size);
 		this.hash = new HashFunction(size);
 		this.table = new Tuple[this.size];
@@ -142,6 +142,8 @@ public class HashTable {
 	}
 
 	public void remove(Tuple t) {
+		int h = hash.hash(t.getKey());
+		Tuple temp = this.table[t.getKey()];
 		
 	}
 

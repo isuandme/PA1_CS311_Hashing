@@ -99,13 +99,13 @@ public class HashStringSimilarity
 			}
 			n += SH.search(SnoDup[i]) * TH.search(SnoDup[i]);
 		}
-		System.out.println("N: " + n);
+
 		return n/d;
 	}
 	
 	private float vectorLength(boolean SorT) {
 		int value = 0;
-		int counter = 0, dCount = 0;//breakEarly = 0;
+		int counter = 0, dCount = 0,breakEarly = 0;
 		Tuple[] tmpArray;
 		Tuple[] dup;
 		HashTable tmpTable;
@@ -116,28 +116,28 @@ public class HashStringSimilarity
 			tmpArray = S;
 			tmpTable = SH;
 			dup = SnoDup;
-			//breakEarly = SH.numElements();
+			breakEarly = SH.numElements();
 
 		}else{
 			tmpArray = T;
 			tmpTable = TH;
 			dup = TnoDup;
-			//breakEarly = TH.numElements();
+			breakEarly = TH.numElements();
 
 		}
 		
 		for(int i = 0; i < tmpArray.length; i++)
 		{
-			/*if(breakEarly == 0){
-				break;
-			}*/
+			if(breakEarly == 0){
+				break;}
+			
 			
 			tmp = tmpTable.search(tmpArray[i].getKey());
 			for(int j = 0; j < tmp.size(); j++)
 			{
 				if(tmp.get(j).getVisted() == false && (tmpArray[i].getValue().equals(tmp.get(j).getValue())))
 				{
-					//breakEarly --;
+					breakEarly --;
 					dup[dCount] = tmp.get(j);
 					dCount ++;
 					counter = tmp.get(j).getSize();
@@ -147,7 +147,7 @@ public class HashStringSimilarity
 			}
 			
 		}
-		System.out.println(value);
+
 		return (float) Math.sqrt(value);
 	}
 }

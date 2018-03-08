@@ -118,7 +118,7 @@ public class BruteForceSimilarity {
 			
 		}
 	
-		System.out.println(n);
+		System.out.println("N: " + n);
 		return n / d;
 	}
 	

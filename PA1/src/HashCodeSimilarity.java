@@ -18,7 +18,7 @@ public class HashCodeSimilarity
 	// member fields and other member methods
 	// member fields and other member methods
 		Tuple[] S, T, SnoDup, TnoDup;
-		HashTable SH, TH;
+		HashTable SH, TH, UH;
 		public HashCodeSimilarity(String s1, String s2, int sLength)
 		{
 			S = new Tuple[s1.length() - sLength + 1];
@@ -29,6 +29,7 @@ public class HashCodeSimilarity
 			
 			SH = new HashTable(s1.length() - sLength + 1);
 			TH = new HashTable(s2.length() - sLength + 1);
+			UH = new HashTable((s2.length() + s1.length()) - sLength + 1);
 			
 			char[] charr = new char[sLength];
 			char[] charrS2 = new char[sLength];
@@ -55,27 +56,29 @@ public class HashCodeSimilarity
 					alphaPow = alphaPow * alpha;
 				}
 			}
-			String tmp = new String(charr);
-			S[0] = new Tuple((int) hashValue, tmp);
-			SH.add(new Tuple((int) hashValue, tmp));
+			S[0] = new Tuple((int) hashValue, "");
+			SH.add(new Tuple((int) hashValue,""));
+			UH.add(new Tuple((int) hashValue, ""));
 
-			tmp = new String(charrS2);
-			T[0] = new Tuple((int) hashValueS2, tmp);
-			TH.add(new Tuple((int) hashValueS2, tmp));
+			T[0] = new Tuple((int) hashValueS2, "");
+			TH.add(new Tuple((int) hashValueS2, ""));
+			UH.add(new Tuple((int) hashValueS2, ""));
 
 			
 			for(int i = 1; i <= s1.length() - sLength; i++ ){
 				hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
 				firstVal = Math.abs(s1.charAt(i) *alphaPow);
-				S[i] = new Tuple((int) hashValue, (s1.substring(i, i+ sLength)));
-				SH.add(new Tuple((int) hashValue, (s1.substring(i, i + sLength))));
+				S[i] = new Tuple((int) hashValue, "");
+				SH.add(new Tuple((int) hashValue, ""));
+				UH.add(new Tuple((int) hashValue, ""));
 			}
 			
 			for(int i = 1; i <= s2.length() - sLength; i++ ){
 				hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
 				firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
-				T[i] = new Tuple((int) hashValueS2, (s2.substring(i, i + sLength)));
-				TH.add(new Tuple((int) hashValueS2, (s2.substring(i, i + sLength))));
+				T[i] = new Tuple((int) hashValueS2, "");
+				TH.add(new Tuple((int) hashValueS2, ""));
+				UH.add(new Tuple((int) hashValueS2, ""));
 			}
 		}
 
@@ -108,7 +111,8 @@ public class HashCodeSimilarity
 		
 		private float vectorLength(boolean SorT) {
 			int value = 0;
-			int counter = 0, dCount = 0;//breakEarly = 0;
+			int counter = 0, dCount = 0, breakEarly = 0;
+			boolean visited;
 			Tuple[] tmpArray;
 			Tuple[] dup;
 			HashTable tmpTable;
@@ -119,34 +123,43 @@ public class HashCodeSimilarity
 				tmpArray = S;
 				tmpTable = SH;
 				dup = SnoDup;
-				//breakEarly = SH.numElements();
+				breakEarly = SH.numElements();
 
 			}else{
 				tmpArray = T;
 				tmpTable = TH;
 				dup = TnoDup;
-				//breakEarly = TH.numElements();
+				breakEarly = TH.numElements();
 
 			}
 			
 			for(int i = 0; i < tmpArray.length; i++)
 			{
-				/*if(breakEarly == 0){
+				visited = false;
+				if(breakEarly == 0){
 					break;
-				}*/
+				}
 				
 				tmp = tmpTable.search(tmpArray[i].getKey());
 				for(int j = 0; j < tmp.size(); j++)
 				{
 					if(tmp.get(j).getVisted() == false )
 					{
-						//breakEarly --;
-						dup[dCount] = tmp.get(j);
-						dCount ++;
-						counter += tmp.get(j).getSize();
-						tmp.get(j).setVisted(true);
-						value += counter * counter;
+						if(!tmp.get(j).getVisted())
+						{
+							dup[dCount] = tmp.get(j);
+							dCount ++;
+							counter += tmp.get(j).getSize();
+							tmp.get(j).setVisted(true);
+							visited = true;
+						}else{
+							break;
+						}
 					}
+				}
+				
+				if(visited){
+					value = counter * counter;
 				}
 				
 			}

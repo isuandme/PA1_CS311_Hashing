@@ -65,19 +65,27 @@ public class TESTER {
         {
         	
         	long t;
-        	HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,8);
-        	
-        	t =  System.currentTimeMillis();
-            System.out.println(SS.similarity());
-            t = System.currentTimeMillis() - t;
-            System.out.println(t);
             
         	BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,8);
         	
             t =  System.currentTimeMillis();
-            System.out.println(BF.similarity());
+            System.out.println("Brute Force Similarity: " + BF.similarity());
             t = System.currentTimeMillis() - t;
-            System.out.println(t);
+            System.out.println("Brute Force time in MS: " + t);
+            
+            HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,8);
+        	
+        	t =  System.currentTimeMillis();
+            System.out.println("Hash String Similarity: "+ SS.similarity());
+            t = System.currentTimeMillis() - t;
+            System.out.println("Hash String time in MS: "+t);
+            
+            HashCodeSimilarity HC = new HashCodeSimilarity(shak1,shak2,8);
+        	
+        	t =  System.currentTimeMillis();
+            System.out.println("Hash Code Similarity: "+HC.similarity());
+            t = System.currentTimeMillis() - t;
+            System.out.println("Hash Code time in MS: "+t);
        }
        catch(NullPointerException e)
         {

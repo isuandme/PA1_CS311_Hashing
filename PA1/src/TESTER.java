@@ -25,7 +25,6 @@ public class TESTER {
             FileReader fileReader = new FileReader(fileNameS1);
             FileReader fileReaderS2 = new FileReader(fileNameS2);
 
-
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             
             BufferedReader bufferedReaderS2 = new BufferedReader(fileReaderS2);
@@ -38,7 +37,6 @@ public class TESTER {
             while((line = bufferedReaderS2.readLine()) != null) {
                 shak2 += line;
             } 
-
 
             bufferedReader.close(); 
             bufferedReaderS2.close();
@@ -76,15 +74,14 @@ public class TESTER {
 //        {
 //            System.out.println("sLength cannot be larger then either of the strings!");
 //        }
-       
-
+		
 		//Random rand = new Random();
 		int range = 10;
 		HashTable table = new HashTable(range);
 		Random rand = new Random();
 		char[] abc = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 		
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 9; i++){
 			String str = new String("");
 			for(int j = 0; j < 4; j++){
 				int let = rand.nextInt(4);
@@ -95,10 +92,6 @@ public class TESTER {
 		
 		table.printTable();
 		System.out.println();
-		
-		
-		
-		
 
 	}
 }

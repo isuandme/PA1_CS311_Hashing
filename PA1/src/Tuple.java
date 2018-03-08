@@ -63,10 +63,6 @@ public class Tuple {
 		return false;
 	}
 
-	/**
-	 * Prints out the linked list of tuples starting at the element [i] that it
-	 * is called from.
-	 */
 	public void print() {
 		Tuple temp = this;
 		while (temp != null) {
@@ -89,32 +85,14 @@ public class Tuple {
 		return null;
 	}
 
-	/**
-	 * Standard get next thing whatever.
-	 * 
-	 * @return Tuple
-	 */
 	public Tuple getNext() {
 		return this.next;
 	}
 
-	/**
-	 * GETS THE PREVIOUS ONE DUHHH
-	 * 
-	 * @return Tuple
-	 */
 	public Tuple getPrev() {
 		return this.prev;
 	}
 
-	/**
-	 * Adds a Tuple tot he beginning of the list this is because it should only
-	 * cost O(1)
-	 * 
-	 * @param Tuple
-	 *            t
-	 * @return nothing
-	 */
 	public void add(Tuple t) {
 		if (this.next == null) {
 			this.next = t;

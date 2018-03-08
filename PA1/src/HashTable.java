@@ -29,10 +29,15 @@ public class HashTable
 		tableSize = new int[this.size];
 	}
 
+<<<<<<< HEAD
+	public float loadFactor() {
+		return (float) numElements() / size;
+=======
 	public int maxLoad()
 	{
 		
 		return 0;
+>>>>>>> 11655d0b05f8d22bdc5711b3f70df7ce5e3e4d55
 	}
 
 	public float averageLoad()
@@ -40,9 +45,23 @@ public class HashTable
 		return 0;
 	}
 
+<<<<<<< HEAD
+	public float averageLoad() {
+		int count = 0; 
+		int sum = 0;
+		for (int i = 0; i < this.table.length; i++) {
+			sum = sum + tableSize[i];
+			if (table[i] != null){
+				count++;
+			}
+		}
+		System.out.println(Arrays.toString(this.tableSize)); 
+		return (float) sum / count;
+=======
 	public int size()
 	{
 		return size;
+>>>>>>> 11655d0b05f8d22bdc5711b3f70df7ce5e3e4d55
 	}
 
 	public int numElements()

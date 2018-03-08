@@ -118,8 +118,8 @@ public class HashTable {
 		ArrayList<Tuple> ret = new ArrayList<Tuple>();
 		int h = hash.hash(k);
 		Tuple cur = table[h];
-		while (cur != null) {
-			ret.add(cur);
+		while(cur != null) {
+			ret.add(cur);  		
 			cur = cur.getNext();
 		}
 		return ret;
@@ -129,10 +129,9 @@ public class HashTable {
 		int num = 0;
 		int h = hash.hash(t.getKey());
 		Tuple cur = table[h];
-		while (cur != null) {
-			if (cur.equals(t))
-				num++;
-			cur = cur.getNext();
+		while(cur != null){
+			if(cur.equals(t))
+				num = cur.getSize();
 		}
 		return num;
 	}

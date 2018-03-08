@@ -48,6 +48,7 @@ public class TESTER {
         	ex.printStackTrace();
         }
         */
+<<<<<<< HEAD
 //        shak1 = "A rose is a rose is a rose";
 //        shak2 = "A rose is a flower, which is a rose.";
 //        //remove white space, punctuation, and convert to lowercase
@@ -76,7 +77,7 @@ public class TESTER {
 //        }
 		
 		//Random rand = new Random();
-		int range = 10;
+
 		HashTable table = new HashTable(range);
 		Random rand = new Random();
 		char[] abc = "abcdefghijklmnopqrstuvwxyz".toCharArray();

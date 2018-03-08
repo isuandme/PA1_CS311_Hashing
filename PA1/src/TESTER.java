@@ -50,8 +50,8 @@ public class TESTER {
         	ex.printStackTrace();
         }
         /*
-        shak1 = "aaapt";
-        shak2 = "aaaaj";*/
+        shak1 = "A rose is a rose is a rose";
+        shak2 = "A rose is a flower, which is a rose.";*/
         //remove white space, punctuation, and convert to lowercase
         shak1=shak1.replaceAll("\\s+","");
         shak1=shak1.replaceAll("[^a-zA-Z0-9 ]", ""); 
@@ -61,7 +61,7 @@ public class TESTER {
         shak2=shak2.replaceAll("[^a-zA-Z0-9 ]", ""); 
         shak2=shak2.toLowerCase();
         //System.out.println("Shak1: "+ shak1.length() + " Shak2: "+ shak2.length());
-        try
+      try
         {
         	
         	long t;
@@ -70,16 +70,16 @@ public class TESTER {
         	t =  System.currentTimeMillis();
             System.out.println(SS.similarity());
             t = System.currentTimeMillis() - t;
-           // System.out.println(t);
+            System.out.println(t);
             
         	BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,8);
         	
             t =  System.currentTimeMillis();
             System.out.println(BF.similarity());
             t = System.currentTimeMillis() - t;
-           // System.out.println(t);
-        }
-        catch(NullPointerException e)
+            System.out.println(t);
+       }
+       catch(NullPointerException e)
         {
             System.out.println("sLength cannot be larger then either of the strings!");
         }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // LEAVE THIS FILE IN THE DEFAULT PACKAGE
 //  (i.e., DO NOT add 'package cs311.pa1;' or similar)
 
@@ -14,27 +16,141 @@
 public class HashCodeSimilarity
 {
 	// member fields and other member methods
+	// member fields and other member methods
+		Tuple[] S, T, SnoDup, TnoDup;
+		HashTable SH, TH;
+		public HashCodeSimilarity(String s1, String s2, int sLength)
+		{
+			S = new Tuple[s1.length() - sLength + 1];
+			T = new Tuple[s2.length() - sLength + 1];
 
-	public HashCodeSimilarity(String s1, String s2, int sLength)
-	{
-		// implementation
-	}
+			SnoDup = new Tuple[s1.length() - sLength + 1];
+			TnoDup = new Tuple[s2.length() - sLength + 1];
+			
+			SH = new HashTable(s1.length() - sLength + 1);
+			TH = new HashTable(s2.length() - sLength + 1);
+			
+			char[] charr = new char[sLength];
+			char[] charrS2 = new char[sLength];
+			long hashValue = 0, firstVal = 0, hashValueS2 = 0, firstValS2 = 0;
+			long alpha = 31, alphaPow = 31;
+			
+			hashValue = s1.charAt(sLength-1);
+			charr[sLength - 1] = s1.charAt(sLength-1);
+			hashValueS2 = s2.charAt(sLength-1);
+			charrS2[sLength - 1] = s2.charAt(sLength-1);
+			
+			for(int i = sLength - 2; i >= 0; i --){
+				charr[i] = s1.charAt(i);
+				charrS2[i] = s2.charAt(i);
+				if(i == 0){
+					firstVal = (int) Math.abs(s1.charAt(i) * alphaPow);
+					hashValue = Math.abs(hashValue + firstVal);
+					
+					firstValS2 = (int) Math.abs(s2.charAt(i) * alphaPow);
+					hashValueS2 = Math.abs(hashValueS2 + firstValS2);
+				}else{
+					hashValue =  Math.abs(hashValue + Math.abs(s1.charAt(i) * alphaPow));
+					hashValueS2 = Math.abs(hashValueS2 + Math.abs(s2.charAt(i) * alphaPow));
+					alphaPow = alphaPow * alpha;
+				}
+			}
+			String tmp = new String(charr);
+			S[0] = new Tuple((int) hashValue, tmp);
+			SH.add(new Tuple((int) hashValue, tmp));
 
-	public float lengthOfS1()
-	{
-		// implementation
-		return 0;
-	}
+			tmp = new String(charrS2);
+			T[0] = new Tuple((int) hashValueS2, tmp);
+			TH.add(new Tuple((int) hashValueS2, tmp));
 
-	public float lengthOfS2()
-	{
-		// implementation
-		return 0;
-	}
+			
+			for(int i = 1; i <= s1.length() - sLength; i++ ){
+				hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
+				firstVal = Math.abs(s1.charAt(i) *alphaPow);
+				S[i] = new Tuple((int) hashValue, (s1.substring(i, i+ sLength)));
+				SH.add(new Tuple((int) hashValue, (s1.substring(i, i + sLength))));
+			}
+			
+			for(int i = 1; i <= s2.length() - sLength; i++ ){
+				hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
+				firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
+				T[i] = new Tuple((int) hashValueS2, (s2.substring(i, i + sLength)));
+				TH.add(new Tuple((int) hashValueS2, (s2.substring(i, i + sLength))));
+			}
+		}
 
-	public float similarity()
-	{
-		// implementation
-		return 0;
-	}
+		public float lengthOfS1()
+		{
+			// implementation
+			return vectorLength(true);
+		}
+
+		public float lengthOfS2()
+		{
+			// implementation
+			return vectorLength(false);
+		}
+
+		public float similarity()
+		{
+			float d = lengthOfS1() * lengthOfS2(), //Denominator.
+					n = 0;
+			
+			for(int i = 0; i< SnoDup.length; i ++){
+				if(SnoDup[i] == null){
+					break;
+				}
+				n += SH.search(SnoDup[i]) * TH.search(SnoDup[i]);
+			}
+			System.out.println("N: " + n);
+			return n/d;
+		}
+		
+		private float vectorLength(boolean SorT) {
+			int value = 0;
+			int counter = 0, dCount = 0;//breakEarly = 0;
+			Tuple[] tmpArray;
+			Tuple[] dup;
+			HashTable tmpTable;
+			ArrayList<Tuple> tmp;
+			
+			//Determine which set we are dealing with, and assigns tmp as a reference;
+			if(SorT){
+				tmpArray = S;
+				tmpTable = SH;
+				dup = SnoDup;
+				//breakEarly = SH.numElements();
+
+			}else{
+				tmpArray = T;
+				tmpTable = TH;
+				dup = TnoDup;
+				//breakEarly = TH.numElements();
+
+			}
+			
+			for(int i = 0; i < tmpArray.length; i++)
+			{
+				/*if(breakEarly == 0){
+					break;
+				}*/
+				
+				tmp = tmpTable.search(tmpArray[i].getKey());
+				for(int j = 0; j < tmp.size(); j++)
+				{
+					if(tmp.get(j).getVisted() == false )
+					{
+						//breakEarly --;
+						dup[dCount] = tmp.get(j);
+						dCount ++;
+						counter += tmp.get(j).getSize();
+						tmp.get(j).setVisted(true);
+						value += counter * counter;
+					}
+				}
+				
+			}
+			System.out.println(value);
+			return (float) Math.sqrt(value);
+		}
 }

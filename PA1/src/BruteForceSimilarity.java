@@ -132,14 +132,14 @@ public class BruteForceSimilarity {
 		int testCount = 0;
 		
 		//Determine which set we are dealing with, and assigns tmp as a reference;
+		int totalNum = 0;
 		if(SorT){
 			tmp = SnoDup;
-			System.out.print("S1: ");
+
 		}else{
 			tmp = TnoDup;
-			System.out.print("S2: ");
+
 		}
-		
 		for(int i = 0; i < list.length; i++){
 			counter = 1;
 			
@@ -169,7 +169,7 @@ public class BruteForceSimilarity {
 		}
 		
 		//apparently Math.sqrt is O(1)
-		System.out.println(testCount + " val " + value);
+		System.out.println( value);
 		return (float) Math.sqrt(value);
 	}
 }

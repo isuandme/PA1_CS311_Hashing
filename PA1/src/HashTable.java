@@ -78,7 +78,6 @@ public class HashTable
 				this.numOfElements++;
 			} else {
 				temp.increaseSize();
-				this.numOfElements++;
 			}
 		}
 		if(averageLoad() > .7){
@@ -132,8 +131,9 @@ public class HashTable
 		int h = hash.hash(t.getKey());
 		Tuple cur = table[h];
 		while(cur != null){
-			if(cur.equals(t))
-				num = cur.getSize();
+			if(cur.equals(t)){
+				num = cur.getSize();}
+			cur = cur.getNext();
 		}
 		return num;
 	}

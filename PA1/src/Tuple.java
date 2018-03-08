@@ -21,12 +21,6 @@ public class Tuple
 	private int size;
 	private boolean visited;
 	
-	public Tuple(int KeyP) {
-		this.key = KeyP;
-		this.next = null;
-		this.prev = null;
-		this.size = 0;
-	}
 	
 	public Tuple(int keyP, String valueP)
 	{
@@ -62,7 +56,7 @@ public class Tuple
 	
 	public boolean equals(Tuple t)
 	{
-		if((this.value == null && this.key == t.key) || (this.key == t.key && this.value.equals(t.value)))
+		if(this.key == t.key && this.value.equals(t.value))
 			return true;	
 		return false;
 	}

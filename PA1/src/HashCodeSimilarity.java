@@ -67,25 +67,25 @@ public class HashCodeSimilarity
 					alphaPow = alphaPow * alpha;
 				}
 			}
-			S[0] = new Tuple((int) hashValue);
-			SH.add(S[0]);
+			S[0] = new Tuple((int) hashValue, "");
+			SH.add(new Tuple((int) hashValue, ""));
 
-			T[0] = new Tuple((int) hashValueS2);
-			TH.add(new Tuple((int) hashValueS2));
+			T[0] = new Tuple((int) hashValueS2, "");
+			TH.add(new Tuple((int) hashValueS2, ""));
 			
 			//rollover hashing
 			for(int i = 1; i <= s1.length() - sLength; i++ ){
 				hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
 				firstVal = Math.abs(s1.charAt(i) *alphaPow);
-				S[i] = new Tuple((int) hashValue);
-				SH.add(new Tuple((int) hashValue));
+				S[i] = new Tuple((int) hashValue, "");
+				SH.add(new Tuple((int) hashValue, ""));
 			}
 			
 			for(int i = 1; i <= s2.length() - sLength; i++ ){
 				hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
 				firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
-				T[i] = new Tuple((int) hashValueS2);
-				TH.add(new Tuple((int) hashValueS2));
+				T[i] = new Tuple((int) hashValueS2, "");
+				TH.add(new Tuple((int) hashValueS2, ""));
 			}
 		}
 

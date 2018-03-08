@@ -128,8 +128,14 @@ public class HashTable {
 		int h = hash.hash(t.getKey());
 		Tuple cur = table[h];
 		while(cur != null){
-			if(cur.equals(t)){
-				num = cur.getSize();}
+			if(cur.getValue() == null){
+				if(cur.getKey() == t.getKey()){
+					num = cur.getSize();
+					break;
+				}
+			}else if(cur.equals(t)){
+				num = cur.getSize();
+				break;}
 			cur = cur.getNext();
 		}
 		return num;

@@ -10,17 +10,20 @@ import java.util.ArrayList;
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Hugh Potter
+* @author Hadis Fetic
 */
 
 public class HashCodeSimilarity
 {
-	// member fields and other member methods
-	// member fields and other member methods
+
 		Tuple[] S, T, SnoDup, TnoDup;
-		HashTable SH, TH;
+		HashTable SH, TH, UH;
 		public HashCodeSimilarity(String s1, String s2, int sLength)
 		{
+			
+			if(sLength> s1.length() || sLength > s2.length() || sLength <=0){
+				throw new NullPointerException();
+			}
 			S = new Tuple[s1.length() - sLength + 1];
 			T = new Tuple[s2.length() - sLength + 1];
 
@@ -35,10 +38,19 @@ public class HashCodeSimilarity
 			long hashValue = 0, firstVal = 0, hashValueS2 = 0, firstValS2 = 0;
 			long alpha = 31, alphaPow = 31;
 			
+			
+			//initial hashing
 			hashValue = s1.charAt(sLength-1);
 			charr[sLength - 1] = s1.charAt(sLength-1);
 			hashValueS2 = s2.charAt(sLength-1);
 			charrS2[sLength - 1] = s2.charAt(sLength-1);
+			
+			if(sLength == 1){
+				firstVal = hashValue;
+				firstValS2 = hashValueS2;
+				alphaPow = 1;
+				alpha = 1;
+			}
 			
 			for(int i = sLength - 2; i >= 0; i --){
 				charr[i] = s1.charAt(i);
@@ -55,27 +67,25 @@ public class HashCodeSimilarity
 					alphaPow = alphaPow * alpha;
 				}
 			}
-			String tmp = new String(charr);
-			S[0] = new Tuple((int) hashValue, tmp);
-			SH.add(new Tuple((int) hashValue, tmp));
+			S[0] = new Tuple((int) hashValue, "");
+			SH.add(new Tuple((int) hashValue, ""));
 
-			tmp = new String(charrS2);
-			T[0] = new Tuple((int) hashValueS2, tmp);
-			TH.add(new Tuple((int) hashValueS2, tmp));
-
+			T[0] = new Tuple((int) hashValueS2, "");
+			TH.add(new Tuple((int) hashValueS2, ""));
 			
+			//rollover hashing
 			for(int i = 1; i <= s1.length() - sLength; i++ ){
 				hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
 				firstVal = Math.abs(s1.charAt(i) *alphaPow);
-				S[i] = new Tuple((int) hashValue, (s1.substring(i, i+ sLength)));
-				SH.add(new Tuple((int) hashValue, (s1.substring(i, i + sLength))));
+				S[i] = new Tuple((int) hashValue, "");
+				SH.add(new Tuple((int) hashValue, ""));
 			}
 			
 			for(int i = 1; i <= s2.length() - sLength; i++ ){
 				hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
 				firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
-				T[i] = new Tuple((int) hashValueS2, (s2.substring(i, i + sLength)));
-				TH.add(new Tuple((int) hashValueS2, (s2.substring(i, i + sLength))));
+				T[i] = new Tuple((int) hashValueS2, "");
+				TH.add(new Tuple((int) hashValueS2, ""));
 			}
 		}
 
@@ -102,13 +112,14 @@ public class HashCodeSimilarity
 				}
 				n += SH.search(SnoDup[i]) * TH.search(SnoDup[i]);
 			}
-			System.out.println("N: " + n);
+
 			return n/d;
 		}
 		
 		private float vectorLength(boolean SorT) {
 			int value = 0;
-			int counter = 0, dCount = 0;//breakEarly = 0;
+			int counter = 0, dCount = 0, breakEarly = 0;
+			boolean visited;
 			Tuple[] tmpArray;
 			Tuple[] dup;
 			HashTable tmpTable;
@@ -119,38 +130,44 @@ public class HashCodeSimilarity
 				tmpArray = S;
 				tmpTable = SH;
 				dup = SnoDup;
-				//breakEarly = SH.numElements();
+				breakEarly = SH.numElements();
 
 			}else{
 				tmpArray = T;
 				tmpTable = TH;
 				dup = TnoDup;
-				//breakEarly = TH.numElements();
+				breakEarly = TH.numElements();
 
 			}
 			
 			for(int i = 0; i < tmpArray.length; i++)
 			{
-				/*if(breakEarly == 0){
+				counter = 0;
+				visited = false;
+				if(breakEarly == 0){
 					break;
-				}*/
+				}
 				
 				tmp = tmpTable.search(tmpArray[i].getKey());
 				for(int j = 0; j < tmp.size(); j++)
 				{
-					if(tmp.get(j).getVisted() == false )
+					if(!tmp.get(j).getVisted() && tmp.get(j).getKey() == tmpArray[i].getKey())
 					{
-						//breakEarly --;
+						breakEarly --;
 						dup[dCount] = tmp.get(j);
 						dCount ++;
 						counter += tmp.get(j).getSize();
 						tmp.get(j).setVisted(true);
-						value += counter * counter;
+						visited = true;
 					}
 				}
 				
+				if(visited){
+					value += counter * counter;
+				}
+				
 			}
-			System.out.println(value);
+
 			return (float) Math.sqrt(value);
 		}
 }

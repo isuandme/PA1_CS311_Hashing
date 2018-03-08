@@ -40,7 +40,7 @@ public class BruteForceSimilarity {
 	BruteForceSimilarity(String s1, String s2, int sLength) {
 		int k;
 		//check to see if sLength is larger then either string.
-		if(sLength> s1.length() || sLength > s2.length()){
+		if(sLength> s1.length() || sLength > s2.length() || sLength <=0){
 			throw new NullPointerException();
 		}
 		//initialize all the values;
@@ -118,7 +118,6 @@ public class BruteForceSimilarity {
 			
 		}
 	
-		System.out.println(n);
 		return n / d;
 	}
 	
@@ -129,10 +128,8 @@ public class BruteForceSimilarity {
 		int dupCount = 0;
 		int counter;
 		Pair[] tmp;
-		int testCount = 0;
 		
 		//Determine which set we are dealing with, and assigns tmp as a reference;
-		int totalNum = 0;
 		if(SorT){
 			tmp = SnoDup;
 
@@ -162,14 +159,10 @@ public class BruteForceSimilarity {
 
 			tmp[dupCount].setCount(counter);
 			dupCount ++;
-			if(counter > 2){
-				testCount ++;
-			}
         	value += counter*counter;
 		}
 		
 		//apparently Math.sqrt is O(1)
-		System.out.println( value);
 		return (float) Math.sqrt(value);
 	}
 }

@@ -19,6 +19,7 @@ public class Tuple {
 	private Tuple prev;
 	private int size;
 	private boolean visited;
+<<<<<<< HEAD
 
 	public Tuple() {
 		this.key = 0;
@@ -28,6 +29,12 @@ public class Tuple {
 	}
 
 	public Tuple(int keyP, String valueP) {
+=======
+	
+	
+	public Tuple(int keyP, String valueP)
+	{
+>>>>>>> 9098576f642856ec27de1d20b188061ba4c7f580
 		this.key = keyP;
 		this.value = valueP;
 		this.size = 0;

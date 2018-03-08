@@ -66,10 +66,6 @@ public class HashTable {
 
 	public void add(Tuple t) {
 		if (loadFactor() > (float) 0.7) {
-			this.printTable();
-			System.out.println();
-			System.out.println("-------------------------------------------------------------------------------------------");
-			System.out.println();
 			this.resize();
 		}
 		int h = hash.hash(t.getKey());
@@ -89,6 +85,12 @@ public class HashTable {
 		}
 	}
 
+	/**
+	 * resize() is a private method that is called by a HashTable when 
+	 * the table inside of it is getting too large. It will double in size
+	 * to the larger closest prime number and re-hash all elements to that new
+	 * hash table. 
+	 */
 	private void resize() {
 		this.size = findPrime(this.size * 2);
 		this.hash = new HashFunction(this.size);
@@ -134,24 +136,7 @@ public class HashTable {
 	}
 
 	public void remove(Tuple t) {
-		int h = hash.hash(t.getKey());
-		Tuple cur = table[h];
-		while (cur != null) {
-			if (cur.getPrev() == null) {
-
-				table[h] = cur.getNext();
-				cur.copyLeft();
-				cur.remove();
-			}
-			if (cur.getNext() == null) {
-
-			}
-			if (cur.equals(t)) {
-				cur.remove();
-				break;
-			}
-			cur = cur.getNext();
-		}
+		
 	}
 
 	/******************** BELOW ARE PRINT METHODS ******************/

@@ -40,7 +40,7 @@ public class BruteForceSimilarity {
 	BruteForceSimilarity(String s1, String s2, int sLength) {
 		int k;
 		//check to see if sLength is larger then either string.
-		if(sLength> s1.length() || sLength > s2.length()){
+		if(sLength> s1.length() || sLength > s2.length() || sLength <=0){
 			throw new NullPointerException();
 		}
 		//initialize all the values;

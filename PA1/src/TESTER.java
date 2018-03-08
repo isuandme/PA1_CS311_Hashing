@@ -11,8 +11,8 @@ public class TESTER {
 	
 	public static void main(String [] args){
 		
-		// The name of the file to open.
-        String fileNameS1 = "/Users/Hadis/Documents/com311/pa1/PA1_CS311_Hashing/shak1";
+		// The name of the file to open.        \
+		String fileNameS1 = "/Users/Hadis/Documents/com311/pa1/PA1_CS311_Hashing/shak1";
         String fileNameS2 = "/Users/Hadis/Documents/com311/pa1/PA1_CS311_Hashing/shak2";
 
         // This will reference one line at a time
@@ -61,8 +61,8 @@ public class TESTER {
         shak2=shak2.replaceAll("[^a-zA-Z0-9 ]", ""); 
         shak2=shak2.toLowerCase();
         //System.out.println("Shak1: "+ shak1.length() + " Shak2: "+ shak2.length());
-     // try
-     //   {
+      try
+        {
         	
         	long t;
             
@@ -85,8 +85,8 @@ public class TESTER {
             System.out.println("Hash Code Similarity: "+HC.similarity());
             t = System.currentTimeMillis() - t;
             System.out.println("Hash Code time in MS: "+t);
-     //  }
-      /* catch(NullPointerException e)
+       }
+      catch(NullPointerException e)
         {
             System.out.println("sLength cannot be larger then either of the strings!");
         }

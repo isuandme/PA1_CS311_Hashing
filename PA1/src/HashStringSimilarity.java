@@ -20,7 +20,7 @@ public class HashStringSimilarity
 	HashTable SH, TH;
 	public HashStringSimilarity(String s1, String s2, int sLength)
 	{
-		if(sLength> s1.length() || sLength > s2.length()){
+		if(sLength> s1.length() || sLength > s2.length() ||sLength <= 0){
 			throw new NullPointerException();
 		}
 		S = new Tuple[s1.length() - sLength + 1];
@@ -41,6 +41,13 @@ public class HashStringSimilarity
 		charr[sLength - 1] = s1.charAt(sLength-1);
 		hashValueS2 = s2.charAt(sLength-1);
 		charrS2[sLength - 1] = s2.charAt(sLength-1);
+		
+		if(sLength == 1){
+			firstVal = hashValue;
+			firstValS2 = hashValueS2;
+			alphaPow = 1;
+			alpha = 1;
+		}
 		
 		for(int i = sLength - 2; i >= 0; i --){
 			charr[i] = s1.charAt(i);

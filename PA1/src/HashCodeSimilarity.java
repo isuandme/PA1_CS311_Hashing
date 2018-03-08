@@ -57,7 +57,7 @@ public class HashCodeSimilarity
 				}
 			}
 			S[0] = new Tuple((int) hashValue, "");
-			SH.add(new Tuple((int) hashValue,""));
+			SH.add(S[0]);
 			UH.add(new Tuple((int) hashValue, ""));
 
 			T[0] = new Tuple((int) hashValueS2, "");
@@ -69,7 +69,7 @@ public class HashCodeSimilarity
 				hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
 				firstVal = Math.abs(s1.charAt(i) *alphaPow);
 				S[i] = new Tuple((int) hashValue, "");
-				SH.add(new Tuple((int) hashValue, ""));
+				SH.add(S[i]);
 				UH.add(new Tuple((int) hashValue, ""));
 			}
 			
@@ -135,6 +135,7 @@ public class HashCodeSimilarity
 			
 			for(int i = 0; i < tmpArray.length; i++)
 			{
+				counter = 0;
 				visited = false;
 				if(breakEarly == 0){
 					break;
@@ -143,23 +144,19 @@ public class HashCodeSimilarity
 				tmp = tmpTable.search(tmpArray[i].getKey());
 				for(int j = 0; j < tmp.size(); j++)
 				{
-					if(tmp.get(j).getVisted() == false )
+					if(!tmp.get(j).getVisted() && tmp.get(j).getKey() == tmpArray[i].getKey())
 					{
-						if(!tmp.get(j).getVisted())
-						{
-							dup[dCount] = tmp.get(j);
-							dCount ++;
-							counter += tmp.get(j).getSize();
-							tmp.get(j).setVisted(true);
-							visited = true;
-						}else{
-							break;
-						}
+						breakEarly --;
+						dup[dCount] = tmp.get(j);
+						dCount ++;
+						counter += tmp.get(j).getSize();
+						tmp.get(j).setVisted(true);
+						visited = true;
 					}
 				}
 				
 				if(visited){
-					value = counter * counter;
+					value += counter * counter;
 				}
 				
 			}

@@ -1,4 +1,6 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 // LEAVE THIS FILE IN THE DEFAULT PACKAGE
 //  (i.e., DO NOT add 'package cs311.pa1;' or similar)
@@ -10,19 +12,19 @@ import java.util.ArrayList;
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Hugh Potter
+* @author Jacob R. Pratt, , 
 */
 
 public class HashTable
 {	
 	
-	private int size, numOfElements;
+	private int size, totalElements;
 	private HashFunction hash;
 	private Tuple[] table;
 	private int[] tableSize;
 	
 	public HashTable(int size) {
-		this.numOfElements = 0;
+		this.totalElements = 0;
 		this.size = findPrime(size);
 		this.hash = new HashFunction(size);
 		this.table = new Tuple[this.size];
@@ -41,19 +43,12 @@ public class HashTable
 
 	public float averageLoad()
 	{
-		int sum = 0;
-		int count = 0;
-		for(int i = 0; i < tableSize.length; i++)
-			if(table[i] != null){
-				count++;
-				sum = sum + tableSize[i];
-			}
-		return sum / count;
+		return 0;
 	}
 
 	public int size()
 	{
-		return size;
+		return this.size;
 	}
 
 	public int numElements()
@@ -69,13 +64,7 @@ public class HashTable
 	{
 		return (float) numElements() / size;
 	}
-	
-	/**
-	 * add(Tuple t) adds the Tuple to the hash table. When 0.7 load factor is 
-	 * reached then the array doubles and each element is rehashed. and re-added to the 
-	 * new hashtable.
-	 * @param 
-	 */
+
 	public void add(Tuple t)
 	{
 		int h = hash.hash(t.getKey());
@@ -93,13 +82,9 @@ public class HashTable
 				temp.increaseSize();
 			}
 		}
-		if(averageLoad() > .7){
-			HashTable tempTable = new HashTable(size*2);
-			table = tempTable.copy(table);
-		}
 	}
 	
-	public Tuple[] copy(Tuple[] oldTable){
+	private Tuple[] resize(Tuple[] oldTable){
 		for(int j = 0; j < oldTable.length; j++){
 			Tuple tempTuple = oldTable[j];
 			while(tempTuple != null){
@@ -110,15 +95,6 @@ public class HashTable
 		return this.table;
 	}
 	
-	 
-
-	/**
-	 * search(int k) takes in a number that will be the sudo "key" value 
-	 * then finds that hash index and adds each element to the ArrayList 
-	 * being returned.
-	 * @param int
-	 * @return ArrayList<Tuple>
-	 */
 	public ArrayList<Tuple> search(int k)
 	{
 		ArrayList<Tuple> ret = new ArrayList<Tuple>();
@@ -131,13 +107,6 @@ public class HashTable
 		return ret;
 	}
 
-	/**
-	 * search(Tuple t) finds all the number of Tuples in a hash value
-	 * provided by t.getKey(). The number gets the number of Tuples
-	 * in that hash value at index h.
-	 * @param Tuple t
-	 * @return int
-	 */
 	public int search(Tuple t)
 	{
 		int num = 0;
@@ -151,13 +120,6 @@ public class HashTable
 		return num;
 	}
 
-	/**
-	 * remove(Tuple t) takes the has code from the key of t and 
-	 * calculates where in the array that is needs to be removed. 
-	 * It then removes it from the array. will not remove something 
-	 * that doesn't exist.
-	 * @param Tuple
-	 */
 	public void remove(Tuple t)
 	{
 		int h = hash.hash(t.getKey());
@@ -174,12 +136,19 @@ public class HashTable
 			}
 			if(cur.equals(t)){
 				cur.remove();
-				this.numOfElements--;
 				break;
 			} 
 			cur = cur.getNext();
 		}
 	}
+	
+	
+	
+	
+	
+	/******************** BELOW ARE PRINT METHODS ******************/
+	
+	
 	
 	/**
 	 * PrintTable() prints the specific HashTable.
@@ -193,15 +162,25 @@ public class HashTable
 				System.out.print("Hash<" + i + ">: ");
 				table[i].print();
 				System.out.println();
-				System.out.println("Size of each List:" + this.tableSize.toString());
-				System.out.println();
 			}
 		}
+		System.out.println();
+		System.out.println("Based of a generation of 100 random strings.");
+		System.out.println("FIELD: tableSize: " + Arrays.toString(this.tableSize));
+		System.out.println("numElements(): " + this.numElements() + "<--- independent elements");
+		System.out.println("maxLoad(): " + this.maxLoad());
+		System.out.println("size(): " + this.size());
 	}
 	
-	public void printNumElements(){
-		System.out.println("numElements:" + this.numOfElements);
-	}
+	
+	
+	
+	
+	
+	/************* PRIME FUNCTIONS BELOW *******************/
+	
+	
+	
 	
 	private int findPrime(int n) {
 		boolean found = false;

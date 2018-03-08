@@ -8,11 +8,10 @@
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Jacob Pratt & 
-*/
+ * @author Jacob Pratt &
+ */
 
-public class Tuple
-{
+public class Tuple {
 	// member fields and other member methods
 	private int key;
 	private String value;
@@ -20,103 +19,104 @@ public class Tuple
 	private Tuple prev;
 	private int size;
 	private boolean visited;
-	
+
 	public Tuple() {
 		this.key = 0;
 		this.next = null;
 		this.prev = null;
 		this.size = 0;
 	}
-	
-	public Tuple(int keyP, String valueP)
-	{
+
+	public Tuple(int keyP, String valueP) {
 		this.key = keyP;
 		this.value = valueP;
 		this.size = 0;
 	}
-	
-	public void setVisted(boolean visited){
+
+	public void setVisted(boolean visited) {
 		this.visited = visited;
 	}
-	
-	public boolean getVisted(){
+
+	public boolean getVisted() {
 		return visited;
 	}
-	
-	public int getKey()
-	{
+
+	public int getKey() {
 		return key;
 	}
-	public String getValue()
-	{
+
+	public String getValue() {
 		return value;
 	}
-	
-	public void setKey(int key){
+
+	public void setKey(int key) {
 		this.key = key;
 	}
-	
-	public void setValue(String value){
+
+	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	public boolean equals(Tuple t)
-	{
-		if(this.key == t.key && this.value.equals(t.value))
-			return true;	
+
+	public boolean equals(Tuple t) {
+		if (this.key == t.key && this.value.equals(t.value))
+			return true;
 		return false;
 	}
-	
+
 	/**
-	 * Prints out the linked list of tupples starting at the element [i] that it
-	 * is called from. 
+	 * Prints out the linked list of tuples starting at the element [i] that it
+	 * is called from.
 	 */
-	public void print(){
+	public void print() {
 		Tuple temp = this;
-		while(temp != null){
+		while (temp != null) {
 			System.out.print("[" + temp.key + "," + temp.value + "," + temp.size + "] ");
 			temp = temp.next;
 		}
 	}
-	
-	public Tuple search(Tuple t){
+
+	public Tuple search(Tuple t) {
 		Tuple temp;
-		if(this.equals(t))
+		if (this.equals(t))
 			return this;
 		temp = this;
-		while(temp != null){
-			if(temp.equals(t)){
+		while (temp != null) {
+			if (temp.equals(t)) {
 				return temp;
 			}
 			temp = temp.next;
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Standard get next thing whatever.
+	 * 
 	 * @return Tuple
 	 */
-	public Tuple getNext(){
+	public Tuple getNext() {
 		return this.next;
 	}
-	
+
 	/**
 	 * GETS THE PREVIOUS ONE DUHHH
+	 * 
 	 * @return Tuple
 	 */
-	public Tuple getPrev(){
+	public Tuple getPrev() {
 		return this.prev;
 	}
-	
+
 	/**
-	 * Adds a Tuple tot he beginning of the list this is because 
-	 * it should only cost O(1)
-	 * @param Tuple t
+	 * Adds a Tuple tot he beginning of the list this is because it should only
+	 * cost O(1)
+	 * 
+	 * @param Tuple
+	 *            t
 	 * @return nothing
 	 */
-	public void add(Tuple t){
-		if(this.next == null){
+	public void add(Tuple t) {
+		if (this.next == null) {
 			this.next = t;
 			t.prev = this;
 		} else {
@@ -126,8 +126,8 @@ public class Tuple
 			this.next = t;
 		}
 	}
-	
-	public void remove(){
+
+	public void remove() {
 		this.next.prev = this.prev;
 		this.prev.next = this.next;
 	}
@@ -135,31 +135,26 @@ public class Tuple
 	public int getSize() {
 		return size;
 	}
-	
-	public void increaseSize(){
+
+	public void increaseSize() {
 		size++;
 	}
-	
-	public void decreaseSize(){
+
+	public void decreaseSize() {
 		size--;
-		if(size == 0){
+		if (size == 0) {
 			this.remove();
 		}
 	}
-	
-	public void copyLeft(){
+
+	public void copyLeft() {
 		this.prev.key = this.key;
 		this.prev.value = this.value;
 	}
-	
-	public void copyRight(){
+
+	public void copyRight() {
 		this.next.key = this.key;
 		this.next.value = this.value;
 	}
-	
+
 }
-
-
-
-
-

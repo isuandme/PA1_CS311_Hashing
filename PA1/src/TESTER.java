@@ -66,20 +66,20 @@ public class TESTER {
         	long t;
             
         	t =  System.currentTimeMillis();
-        BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,8);
+        BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,100);
            System.out.println("Brute Force Similarity: " + BF.similarity());
           t = System.currentTimeMillis() - t;
            System.out.println("Brute Force time in MS: " + t);
             
         	t =  System.currentTimeMillis();
-            HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,8);
+            HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,100);
         	
             System.out.println("Hash String Similarity: "+ SS.similarity());
             t = System.currentTimeMillis() - t;
             System.out.println("Hash String time in MS: "+t);
             
         	t =  System.currentTimeMillis();
-            HashCodeSimilarity HC = new HashCodeSimilarity(shak1,shak2,8);
+            HashCodeSimilarity HC = new HashCodeSimilarity(shak1,shak2,100);
         	
             System.out.println("Hash Code Similarity: "+HC.similarity());
             t = System.currentTimeMillis() - t;

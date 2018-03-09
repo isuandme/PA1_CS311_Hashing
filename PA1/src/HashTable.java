@@ -13,12 +13,6 @@ import java.util.Arrays;
 /**
  * @author Hadis Fetic, Jacob R. Pratt, Bradley Bales
  */
-class linkedList{
-	private Tuple next;
-	private Tuple prev;
-	private int size;
-	private boolean visited;
-}
 public class HashTable {
 
 	private int size, numElements;

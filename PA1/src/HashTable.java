@@ -16,13 +16,14 @@ import java.util.Arrays;
 
 public class HashTable {
 
-	private int size;
+	private int size, numElements;
 	private HashFunction hash;
 	private Tuple[] table;
 	private int[] tableSize;
 
 	public HashTable(int size) {
 		this.size = findPrime(size);
+		this.numElements = 0;
 		this.hash = new HashFunction(size);
 		this.table = new Tuple[this.size];
 		this.tableSize = new int[this.size];
@@ -59,11 +60,11 @@ public class HashTable {
 	}
 
 	public int numElements() {
-		int count = 0;
+	/*	int count = 0;
 		for (int i = 0; i < this.size; i++) {
 			count = count + this.tableSize[i];
-		}
-		return count;
+		}*/
+		return numElements;
 	}
 
 	public void add(Tuple t) {
@@ -75,12 +76,14 @@ public class HashTable {
 			this.table[h] = t;
 			this.table[h].increaseSize();
 			this.tableSize[h]++;
+			numElements++;
 		} else {
 			Tuple temp = this.table[h].search(t);
 			if (temp == null) {
 				this.table[h].add(t);
 				this.table[h].getNext().increaseSize();
 				this.tableSize[h]++;
+				numElements++;
 			} else {
 				temp.increaseSize();
 			}
@@ -157,16 +160,21 @@ public class HashTable {
 	public void remove(Tuple t) {
 		int h = hash.hash(t.getKey());
 		Tuple temp = this.table[h];
-		if(temp.getPrev() == null){
+		if(temp.getSize() >1){
+			temp.decreaseSize();
+		}else if(temp.getPrev() == null){
 			temp = temp.getNext();
 			temp.copyLeft();
 			temp.remove();
+			numElements--;
 		} else if (temp.getNext() == null) {
 			temp = temp.getPrev();
 			temp.copyRight();
 			temp.remove();
+			numElements--;
 		} else {
 			temp.remove();
+			numElements--;
 		}
 	}
 	

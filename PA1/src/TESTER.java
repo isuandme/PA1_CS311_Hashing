@@ -20,7 +20,6 @@ public class TESTER {
         String shak1 = "";
         String shak2 = "";
 
-        /*
         try {
             FileReader fileReader = new FileReader(fileNameS1);
             FileReader fileReaderS2 = new FileReader(fileNameS2);
@@ -49,9 +48,9 @@ public class TESTER {
         catch(IOException ex) {
         	ex.printStackTrace();
         }
-        */
+        /*
         shak1 = "A rose is a rose is a rose";
-        shak2 = "A rose is a flower, which is a rose.";
+        shak2 = "A rose is a flower, which is a rose.";*/
         //remove white space, punctuation, and convert to lowercase
         shak1=shak1.replaceAll("\\s+","");
         shak1=shak1.replaceAll("[^a-zA-Z0-9 ]", ""); 
@@ -67,20 +66,20 @@ public class TESTER {
         	long t;
             
         	t =  System.currentTimeMillis();
-        BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,4);
+        BruteForceSimilarity BF = new BruteForceSimilarity(shak1,shak2,8);
            System.out.println("Brute Force Similarity: " + BF.similarity());
           t = System.currentTimeMillis() - t;
            System.out.println("Brute Force time in MS: " + t);
             
         	t =  System.currentTimeMillis();
-            HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,4);
+            HashStringSimilarity SS = new HashStringSimilarity(shak1,shak2,8);
         	
             System.out.println("Hash String Similarity: "+ SS.similarity());
             t = System.currentTimeMillis() - t;
             System.out.println("Hash String time in MS: "+t);
             
         	t =  System.currentTimeMillis();
-            HashCodeSimilarity HC = new HashCodeSimilarity(shak1,shak2,4);
+            HashCodeSimilarity HC = new HashCodeSimilarity(shak1,shak2,8);
         	
             System.out.println("Hash Code Similarity: "+HC.similarity());
             t = System.currentTimeMillis() - t;

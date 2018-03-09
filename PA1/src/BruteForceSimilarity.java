@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //  (i.e., you may include java.util.ArrayList etc. here, but not junit, apache commons, google guava, etc.)
 
 /**
-* @author Hadis Fetic
+* @author Hadis Fetic, Jacob R. Pratt, Bradley Bales
 */
 
 //Created a Pair because I didnt want to change Tuple

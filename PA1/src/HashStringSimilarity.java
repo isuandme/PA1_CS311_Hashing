@@ -16,15 +16,17 @@ import java.util.ArrayList;
 public class HashStringSimilarity
 {
 	// member fields and other member methods
-	Tuple[] S, T, SnoDup, TnoDup;
+	Tuple[] SnoDup, TnoDup;
 	HashTable SH, TH;
 	public HashStringSimilarity(String s1, String s2, int sLength)
 	{
 		if(sLength> s1.length() || sLength > s2.length() ||sLength <= 0){
 			throw new NullPointerException();
 		}
-		S = new Tuple[s1.length() - sLength + 1];
-		T = new Tuple[s2.length() - sLength + 1];
+		
+		int dupCount = 1;
+		
+		Tuple dupTest;
 
 		SnoDup = new Tuple[s1.length() - sLength + 1];
 		TnoDup = new Tuple[s2.length() - sLength + 1];
@@ -64,24 +66,33 @@ public class HashStringSimilarity
 				alphaPow = alphaPow * alpha;
 			}
 		}
-		S[0] = new Tuple((int) hashValue, new String(charr));
+		SnoDup[0] = new Tuple((int) hashValue, new String(charr));
 		SH.add(new Tuple((int) hashValue, new String(charr)));
 
-		T[0] = new Tuple((int) hashValueS2, new String(charrS2));
+		TnoDup[0] = new Tuple((int) hashValueS2, new String(charrS2));
 		TH.add(new Tuple((int) hashValueS2, new String(charrS2)));
 
 		
 		for(int i = 1; i <= s1.length() - sLength; i++ ){
 			hashValue = Math.abs(((hashValue - firstVal)*alpha) + s1.charAt(i + sLength - 1));
 			firstVal = Math.abs(s1.charAt(i) *alphaPow);
-			S[i] = new Tuple((int) hashValue, (s1.substring(i, i+ sLength)));
+			dupTest = new Tuple((int) hashValue, (s1.substring(i, i+ sLength)));
+			if(SH.search(dupTest) == 0){
+				SnoDup[dupCount]=dupTest;
+				dupCount ++;
+			}
 			SH.add(new Tuple((int) hashValue, (s1.substring(i, i + sLength))));
 		}
 		
+		dupCount = 1;
 		for(int i = 1; i <= s2.length() - sLength; i++ ){
 			hashValueS2 = Math.abs(((hashValueS2 - firstValS2)*alpha) + s2.charAt(i + sLength - 1));
 			firstValS2 = Math.abs(s2.charAt(i) *alphaPow);
-			T[i] = new Tuple((int) hashValueS2, (s2.substring(i, i + sLength)));
+			dupTest = new Tuple((int) hashValueS2, (s2.substring(i, i + sLength)));
+			if(TH.search(dupTest) == 0){
+				TnoDup[dupCount]=dupTest;
+				dupCount ++;
+			}
 			TH.add(new Tuple((int) hashValueS2, (s2.substring(i, i + sLength))));
 		}
 	}
@@ -115,46 +126,27 @@ public class HashStringSimilarity
 	
 	private float vectorLength(boolean SorT) {
 		int value = 0;
-		int counter = 0, dCount = 0,breakEarly = 0;
-		Tuple[] tmpArray;
+		int counter = 0;
 		Tuple[] dup;
 		HashTable tmpTable;
-		ArrayList<Tuple> tmp;
 		
 		//Determine which set we are dealing with, and assigns tmp as a reference;
 		if(SorT){
-			tmpArray = S;
 			tmpTable = SH;
 			dup = SnoDup;
-			breakEarly = SH.numElements();
-
 		}else{
-			tmpArray = T;
 			tmpTable = TH;
 			dup = TnoDup;
-			breakEarly = TH.numElements();
-
 		}
 		
-		for(int i = 0; i < tmpArray.length; i++)
+		for(int i = 0; i < dup.length; i++)
 		{
-			/*if(breakEarly == 0){
-				break;}*/
-			
-			
-			tmp = tmpTable.search(tmpArray[i].getKey());
-			for(int j = 0; j < tmp.size(); j++)
-			{
-				if(tmp.get(j).getVisted() == false && (tmpArray[i].getValue().equals(tmp.get(j).getValue())))
-				{
-					breakEarly --;
-					dup[dCount] = tmp.get(j);
-					dCount ++;
-					counter = tmp.get(j).getSize();
-					tmp.get(j).setVisted(true);
-					value += counter * counter;
-				}
+			if(dup[i] == null){
+				break;
 			}
+			counter = tmpTable.search(dup[i]);
+			
+			value += counter *counter;
 			
 		}
 

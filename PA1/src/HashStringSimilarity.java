@@ -138,8 +138,8 @@ public class HashStringSimilarity
 		
 		for(int i = 0; i < tmpArray.length; i++)
 		{
-			if(breakEarly == 0){
-				break;}
+			/*if(breakEarly == 0){
+				break;}*/
 			
 			
 			tmp = tmpTable.search(tmpArray[i].getKey());

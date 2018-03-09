@@ -29,7 +29,7 @@ public class HashTable {
 	}
 
 	public float loadFactor() {
-		return (float) numElements() / size;
+		return (float)numElements() / size;
 	}
 
 	public int maxLoad() {
@@ -72,7 +72,7 @@ public class HashTable {
 		}
 		int h = hash.hash(t.getKey());
 		if (table[h] == null) {
-			this.table[h] = new Tuple(t.getKey(), t.getValue());
+			this.table[h] = t;
 			this.table[h].increaseSize();
 			this.tableSize[h]++;
 		} else {
@@ -94,17 +94,29 @@ public class HashTable {
 	 * hash table. 
 	 */
 	private void resize() {
+		int t = this.table.length;
+		Tuple[] oldTable = new Tuple[this.table.length];
 		this.size = findPrime(this.size * 2);
 		this.hash = new HashFunction(this.size);
-		Tuple[] oldTable = this.table;
+		System.arraycopy( this.table, 0, oldTable, 0, t);
 		this.table = new Tuple[this.size];
 		this.tableSize = new int[this.size];
 		for (int i = 0; i < oldTable.length; i++) {
 			if(oldTable[i] != null){
 				Tuple temp = oldTable[i];
+
 				while(temp != null){
+					if(temp.getSize() == 1){
+					temp.setSize(0);
+					}else
+					{
+						temp.decreaseSize();
+					}
+					Tuple temNext = temp.getNext();
+					temp.setNext();
+					temp.setPrev();
 					this.add(temp);
-					temp = temp.getNext();
+					temp = temNext;
 				}
 			}
 		}

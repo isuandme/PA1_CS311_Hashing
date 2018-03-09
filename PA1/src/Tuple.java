@@ -88,6 +88,13 @@ public class Tuple {
 	public Tuple getPrev() {
 		return this.prev;
 	}
+	public void setNext() {
+		this.next = null;
+	}
+
+	public void setPrev() {
+		this.prev = null;
+	}
 
 	public void add(Tuple t) {
 		if (this.next == null) {
@@ -114,6 +121,9 @@ public class Tuple {
 		size++;
 	}
 
+	public void setSize(int i) {
+		size = i;
+	}
 	public void decreaseSize() {
 		size--;
 		if (size == 0) {
